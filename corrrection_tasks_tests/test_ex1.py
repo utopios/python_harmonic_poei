@@ -33,13 +33,21 @@ def test_unique_id_1():
 
 def test_unique_id_2():
     """unique_id() should return an unused id"""
+    #Arrange
+    ##list generetad id
     ids = []
     initialized_tasks_db()
+
+    #Act
+    ##Add multiple tasks and get ids
     ids.append(tasks.add(Task("first")))
     ids.append(tasks.add(Task("second")))
 
+    ##Call unique_id
     uid = tasks.unique_id()
+    ##Stop tasks db
     stop_tasks_db()
+    ###test if uid is un list of genereted ids
     assert uid not in ids
 
 def initialized_tasks_db():
