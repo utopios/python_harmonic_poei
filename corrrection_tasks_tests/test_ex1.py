@@ -1,5 +1,8 @@
+import pytest
+
 from init import *
 
+@pytest.mark.marker_name_1
 def test_add_task_returns_valid_id():
     """tasks.add(<valid task>) should return an integer"""
     #Arrange
@@ -12,6 +15,7 @@ def test_add_task_returns_valid_id():
     #Assert
     assert isinstance(task_id, int)
 
+@pytest.mark.smoke
 def test_added_task_has_id_set():
     """Be sure that the task_id field is set in database by taks.add()"""
     #Arrange
