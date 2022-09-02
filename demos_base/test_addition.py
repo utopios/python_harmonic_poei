@@ -7,7 +7,7 @@ def inc(x):
 def test_answer_success():
     # """given inc when x is 4 then result is 5"""
     """inc(4) should be 5"""
-    assert inc(4) == 5
+    assert inc(4) == 5, "inc(4) should be 5"
 
 def test_answer_fail():
     assert  inc(3) == 5
