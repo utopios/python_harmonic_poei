@@ -54,8 +54,4 @@ def test_unique_id_2():
     ###test if uid is un list of genereted ids
     assert uid not in ids
 
-def initialized_tasks_db():
-    tasks.start_tasks_db(str('temp'), 'tiny')
 
-def stop_tasks_db():
-    tasks.stop_tasks_db()
