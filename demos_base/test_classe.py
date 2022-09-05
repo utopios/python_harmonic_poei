@@ -11,3 +11,8 @@ class TestClassDemo:
 
     def test_three(self):
         assert TestClassDemo.value == 3
+
+# not used in our case
+# if __name__ == "__main__":
+#     test = TestClassDemo()
+#     test.test_one()
