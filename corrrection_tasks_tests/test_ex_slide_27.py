@@ -4,10 +4,11 @@ import pytest
 
 class TestExcpetions():
 
-    def test_add_not_task_raises(self):
+    @pytest.mark.parametrize("method",[tasks.add, tasks.update])
+    def test_add_not_task_raises(self, method):
         """add() should raise an exception if wrong type instance"""
         with pytest.raises(TypeError):
-            tasks.add(task='not task')
+            method(task='not task')
 
     def test_add_wrong_owner_raises(self):
         """add() should raise an exception if wrong type instance"""
