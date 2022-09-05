@@ -5,6 +5,12 @@ from init import *
 @pytest.mark.smoke
 class TestUpdate():
 
+    # def __init__(self):
+    #     initialized_tasks_db()
+
+    # def __new__(cls, *args, **kwargs):
+    #     return
+
     def equivalent_class(self, t1, t2, task_id):
         return ((t1.summary == t2.summary) and (t1.owner == t2.owner) and (t1.done == t2.done) and t2.id == task_id)
 
