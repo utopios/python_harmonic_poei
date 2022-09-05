@@ -16,7 +16,7 @@ class TasksException(Exception):
 
 class UninitializedDatabase(TasksException):
     """Call tasks.start_tasks_db() before other functions."""
-__version__ = '0.1.0'
+__version__ = '1.3'
 
 def add(task):  # type: (Task) -> int
     """Add a task (a Task object) to the tasks database."""
