@@ -2,8 +2,19 @@ import pytest
 
 from init import *
 
+class Meta(type):
+    def __call__(self, *args, **kwargs):
+        instance = super().__call__(*args, **kwargs)
+        custom_init = getattr(instance, "__custom_init__", None)
+        if callable(custom_init):
+            custom_init(*args, **kwargs)
+
+        return instance
+
 @pytest.mark.smoke
-class TestUpdate():
+class TestUpdate(metaclass=Meta):
+    def __custom_init__(self):
+        initialized_tasks_db()
 
     # def __init__(self):
     #     initialized_tasks_db()
@@ -17,7 +28,7 @@ class TestUpdate():
     def test_update_correct_task(self):
         """tasks. update(<valid_id>, new task value) should update task"""
         # Arrange
-        initialized_tasks_db()
+        #initialized_tasks_db()
         new_task = Task("new task", done=False)
         task_id = tasks.add(new_task)
 
