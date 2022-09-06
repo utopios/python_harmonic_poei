@@ -2,6 +2,7 @@ import pytest
 
 from init import *
 
+
 @pytest.fixture(name="few_tasks")
 def just_a_few_tasks():
     """create fex tasks"""
@@ -11,8 +12,12 @@ def just_a_few_tasks():
         Task("Last one")
     )
 
-def test_add_with_fixture(few_tasks):
+@pytest.fixture
+def start_db():
     initialized_tasks_db()
+
+def test_add_with_fixture(few_tasks, start_db):
+    # initialized_tasks_db()
     old_count = tasks.count()
     for t in few_tasks:
         tasks.add(t)
