@@ -1,9 +1,8 @@
 import pytest
-
-
 def pytest_sessionstart(session):
 
     pass
+
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
