@@ -3,13 +3,9 @@ import json
 
 import requests
 
-class CallApi:
-    def __init__(self):
-        self.user_info = None
-    def get_user(self, user):
-        result = requests.get('http://localhost/users/' + user)
-        self.user_info = json.dump(result.json())
+from demos_mock.api_module import CallApi
 
+### call api has attr => user_info => setted by get_user method
 api = CallApi()
 
 def get_user_from_api(user, api):
@@ -22,9 +18,14 @@ def get_user_from_api(user, api):
 
 ###TEST######
 def test_function_with_api_call(monkeypatch):
+    ###Arrange
     user = "toto"
     api = CallApi()
     monkeypatch.setattr(api, 'user_info', "{name:'toto'}")
+
+    ###Act
     get_user_from_api(user, api)
+
+    ###Assert
     with open("user.txt", "a") as f:
         assert f.read() ==  "{name: 'toto'}"
