@@ -2,11 +2,7 @@ import pytest
 
 from init import *
 
-@pytest.fixture(scope='class', autouse=True)
-def setup_db():
-    initialized_tasks_db()
-    yield
-    stop_tasks_db()
+
 
 @pytest.mark.usefixtures('setup_db')
 class TestUpdate():
