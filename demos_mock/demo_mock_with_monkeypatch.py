@@ -1,29 +1,25 @@
-####DEV######
-import json
 
-import requests
 
 from demos_mock.api_module import CallApi
 
-### call api has attr => user_info => setted by get_user method
-api = CallApi()
 
-def get_user_from_api(user, api):
-    ###Get users for api and write user's informations in file
-    #result = requests.get('http://localhost/users/'+user)
-    with open("user.txt", 'a') as f:
-        api.get_user(user)
-        f.write(api.user_info)
-    pass
 
 ###TEST######
+from demos_mock.function_to_test import get_user_from_api
+
+
 def test_function_with_api_call(monkeypatch):
     ###Arrange
     user = "toto"
+    ##Création de l'objet à mock
     api = CallApi()
-    monkeypatch.setattr(api, 'user_info', "{name:'toto'}")
+
+    ##utiliser monkeypatch pour modifier les attrs de l'objet
+    monkeypatch.setattr(api, 'get_user', '')
+    monkeypatch.setattr(api, 'user_info', "{name: 'toto'}")
 
     ###Act
+    ##Utilise mon objet dans la fonction à tester
     get_user_from_api(user, api)
 
     ###Assert
