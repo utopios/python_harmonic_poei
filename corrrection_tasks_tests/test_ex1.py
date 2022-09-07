@@ -13,7 +13,7 @@ def test_add_task_returns_valid_id():
     task_id = tasks.add(task)
     stop_tasks_db()
     #Assert
-    assert isinstance(task_id, int)
+    assert isinstance(task_id, str)
 
 @pytest.mark.smoke
 def test_added_task_has_id_set():
