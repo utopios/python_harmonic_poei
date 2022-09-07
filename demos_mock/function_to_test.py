@@ -7,7 +7,7 @@ def get_user_from_api(user, api):
 
     ###Get users for api and write user's informations in file
     #result = requests.get('http://localhost/users/'+user)
-    with open("user.txt", 'a') as f:
+    with open("user.txt", 'w') as f:
         api.get_user(user)
         f.write(api.user_info)
     pass

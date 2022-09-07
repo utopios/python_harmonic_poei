@@ -1,6 +1,6 @@
 
 
-from demos_mock.api_module import CallApi
+from api_module import CallApi
 
 
 
@@ -23,5 +23,5 @@ def test_function_with_api_call(monkeypatch):
     get_user_from_api(user, api)
 
     ###Assert
-    with open("user.txt", "a") as f:
+    with open("user.txt", "r") as f:
         assert f.read() ==  "{name: 'toto'}"
