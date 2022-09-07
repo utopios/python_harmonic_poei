@@ -5,3 +5,27 @@ test_ex1.py::test_add_task_returns_valid_id
 test failed : 
 0.020246088010026142
 test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.022559451987035573
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.020870784006547183
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.021776444977149367
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.01722398801939562
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.018435099977068603
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.0016357780259568244
+test_ex1.py::test_add_task_returns_valid_id
+test failed : 
+0.0023605269961990416
+test_ex1.py::test_unique_id_1
+test failed : 
+0.0027755699993576854
+test_ex1.py::test_unique_id_1
