@@ -7,7 +7,7 @@ from api_module import CallApi
 ###TEST######
 from demos_mock.function_to_test import get_user_from_api
 from unittest.mock import MagicMock
-
+from unittest.mock import PropertyMock
 def test_function_with_api_call():
     ###Arrange
     user = "toto"
