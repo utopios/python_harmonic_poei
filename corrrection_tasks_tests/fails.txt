@@ -29,3 +29,6 @@ test_ex1.py::test_unique_id_1
 test failed : 
 0.0027755699993576854
 test_ex1.py::test_unique_id_1
+test failed : 
+0.0005020309472456574
+test_ex_slide_55.py::test_add_task_returns_valid_id

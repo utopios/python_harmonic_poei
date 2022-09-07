@@ -13,6 +13,8 @@ def test_add_task_returns_valid_id(monkeypatch):
     #initialized_tasks_db()
     task = Task("do something")
     #tasks._tasksdb.add = MagicMock(return_value=1)
+
+    ##Si l'attribut est une fonction "callable", le 3eme paramètre doit être soit une fonction, une classe
     monkeypatch.setattr(tasks._tasksdb,'add', lambda x:1)
     #Act
     task_id = tasks.add(task)

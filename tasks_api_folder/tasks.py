@@ -32,6 +32,7 @@ def add(task):  # type: (Task) -> int
     #
     # if not isinstance(task.done, bool):
     #     raise ValueError('task.done must be True or False')
+
     if task.id is not None:
         raise ValueError('task.id must None')
     if _tasksdb is None:
@@ -104,8 +105,28 @@ def unique_id():  # type: () -> int
         raise UninitializedDatabase()
     return _tasksdb.unique_id()
 
+class InterfaceDb:
+    def __init__(self):
+        pass
+    def add(self, t):
+        pass
+    def update(self, t, id):
+        pass
+    def unique_id(self):
+        pass
+    def delete(self,id):
+        pass
+    def delete_all(self):
+        pass
+    def get(self,id):
+        pass
+    def count(self):
+        pass
 
-_tasksdb = None
+    def list_tasks(self, owner):
+        pass
+
+_tasksdb = InterfaceDb()
 
 
 def start_tasks_db(db_path, db_type):  # type: (str, str) -> None
