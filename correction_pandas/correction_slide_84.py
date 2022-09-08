@@ -20,8 +20,8 @@ df = pd.read_csv("Salaries.csv", sep=',')
 # print(df.dtypes)
 
 #Q6
-#print(df[['phd','service','salary']].std())
-#print(df.select_dtypes(include='int64').std())
+print(df[['phd','service','salary']].std())
+print(df.select_dtypes(include='int64').std())
 
 #Q7
-print(df[['phd','service','salary']].head(50).mean())
+#print(df[['phd','service','salary']].head(50).mean())
