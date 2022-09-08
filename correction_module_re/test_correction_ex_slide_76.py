@@ -43,7 +43,9 @@ print(using_subn('t', 't'))
 def question_5():
     str = "TWXA42:JWPA:NTED01:"
     #pattern = r"([A-Z]{4}\d{2})|([A-Z]{4})"
-    pattern= r"([A-Z]{4})([0-9][0-9])?"
+    #pattern= r"([A-Z]{4})([0-9][0-9])?"
+    #Remarque hamdi
+    pattern = r"(.{4})(..)?:"
     for m in finditer(pattern, str):
         print(m.groups(default='NA'))
 if __name__ == "__main__":
