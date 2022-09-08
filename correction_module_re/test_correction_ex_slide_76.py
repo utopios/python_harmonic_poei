@@ -1,5 +1,5 @@
 #1
-from re import findall, split, sub, subn
+from re import findall, split, sub, subn, finditer
 
 chaine = "test   : testetsestets"
 
@@ -38,3 +38,13 @@ def using_subn(pattern):
     return [subn(f'r{pattern}', pattern, w) for w in liste]
 
 print(using_subn('t'))
+
+#5
+def question_5():
+    str = "TWXA42:JWPA:NTED01:"
+    #pattern = r"([A-Z]{4}\d{2})|([A-Z]{4})"
+    pattern= r"([A-Z]{4})([0-9][0-9])?"
+    for m in finditer(pattern, str):
+        print(m.groups(default='NA'))
+if __name__ == "__main__":
+    question_5()
