@@ -6,6 +6,13 @@ import pytest
 def repl_5_by_cinq(str):
     return re.sub('5', 'cinq', str)
 
+def repl_first_5by_cinq(str):
+    return re.sub('5', 'cinq', 1)
+
+def repl_note_by_x_not_sensitve(str):
+    return re.sub('note', 'X', flags=re.IGNORECASE)
+
+
 @pytest.fixture(scope='session')
 def get_data():
     return "une chaine de test avec un chiffre 5 et un autre 5, un 3eme 5 et d'autre chiffre 3, 34, 6"
