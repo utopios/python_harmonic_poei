@@ -14,11 +14,13 @@ def replace_by_x_when_start_by_hand_and_word(liste):
     pattern = r"(^hand\w+)"
     return list(map(lambda str: re.sub(pattern, "X", str), liste))
 
+
+#4
 def replace_e_if_hdot(str):
     if re.search(r"^h\.", str):
         return re.sub("e", "X", str)
     return str
 
-#4
+
 def replace_in_list(liste):
     return list(map(replace_e_if_hdot, liste))
