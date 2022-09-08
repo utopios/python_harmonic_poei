@@ -2,7 +2,7 @@ import re
 
 content = '''start line
 not
-with start
+with stArt
 hello from line'''
 
 def get_line_with_out_start(text):
