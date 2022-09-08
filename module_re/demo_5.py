@@ -1,4 +1,4 @@
 import re
 
-str = "bonjour <text>, test <text>"
-print(re.sub('<text>', 'toto', str, 1))
+str = "bonjour <tExt>, test <text>"
+print(re.sub('<text>', 'toto', str, flags=re.IGNORECASE))
