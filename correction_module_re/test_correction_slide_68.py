@@ -10,7 +10,7 @@ def repl_first_5by_cinq(str):
     return re.sub('5', 'cinq',str, 1)
 
 def repl_note_by_x_not_sensitve(str):
-    return re.sub('note', 'X',str, flags=re.IGNORECASE)
+    return re.sub(r'\d', 'X',str, flags=re.IGNORECASE)
 
 
 @pytest.fixture(scope='session')
@@ -40,4 +40,4 @@ def test_replace_all_notes_by_x_return_string(get_data):
 
 def test_replace_all_notes_by_x_return_no_note(get_data):
     result = repl_note_by_x_not_sensitve(get_data)
-    assert not bool(re.search(r'note', result, flags=re.IGNORECASE))
+    assert not bool(re.search(r'\d', result, flags=re.IGNORECASE))
