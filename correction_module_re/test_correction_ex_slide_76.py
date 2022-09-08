@@ -37,7 +37,7 @@ def using_subn(pattern, replace):
     liste = ['element1', 'toto', 'tata', 'titi', 'minet']
     return [subn(f'r{pattern}', replace, w) for w in liste]
 
-print(using_subn('t', 'f'))
+print(using_subn('t', 't'))
 
 #5
 def question_5():
