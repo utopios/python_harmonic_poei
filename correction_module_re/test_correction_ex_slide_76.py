@@ -1,5 +1,5 @@
 #1
-from re import findall, split, sub
+from re import findall, split, sub, subn
 
 chaine = "test   : testetsestets"
 
@@ -27,9 +27,14 @@ for i in range(len(chaines)):
 print(chaines)
 
 #3
-
-
 str = "(1) test (333) ((element))"
 ##Patern 'Guillaume' \(([^()]*)\)
 liste = findall(r"\((.*)\)", str)
 print(liste)
+
+#4
+def using_subn(pattern):
+    liste = ['element1', 'toto', 'tata', 'titi', 'minet']
+    return [subn(f'r{pattern}', pattern, w) for w in liste]
+
+print(using_subn('t'))
