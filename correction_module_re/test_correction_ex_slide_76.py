@@ -33,11 +33,11 @@ liste = findall(r"\((.*)\)", str)
 print(liste)
 
 #4
-def using_subn(pattern):
+def using_subn(pattern, replace):
     liste = ['element1', 'toto', 'tata', 'titi', 'minet']
-    return [subn(f'r{pattern}', pattern, w) for w in liste]
+    return [subn(f'r{pattern}', replace, w) for w in liste]
 
-print(using_subn('t'))
+print(using_subn('t', 'f'))
 
 #5
 def question_5():
