@@ -15,7 +15,11 @@ def get_todolists():
 ###endpoint pour récupérer une seule todolist
 @app.route('/todolists/<int:id>', methods=['GET'])
 def get_todolist(id):
-    return "todolist with id : "+id
+    try:
+        t = service.get_todo_list(id)
+        return GenericEncoder().encode(t)
+    except:
+        return "Not found", 404
 
 ##endpoint pour ajouter une todolist
 @app.route('/todolists', methods=['POST'])
@@ -27,7 +31,10 @@ def post_todolist():
 ##endpoint pour supprimer la todolist
 @app.route('/todolists/<int:id>', methods=['DELETE'])
 def delete_todolist(id):
-    return "delete todolist"
+    if service.delete_todo_list(id):
+        return "deleted todolist"
+    return "Not found", 404
+
 
 ##endpoint pour mettre à jour la todolist
 @app.route('/todolists/<int:id>', methods=['PUT'])
