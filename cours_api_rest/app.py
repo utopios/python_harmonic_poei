@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -45,23 +45,35 @@ persons = ["toto", "tata", "titi"]
 
 
 ##Routes avec un niveau 1
-@app.route('/getPersons', methods=['POST'])
-def get_persons():
-    return persons
-
-@app.route('/addPerson', methods=['POST'])
-def add_persons():
-    return 'add person'
-
-@app.route('/updatePerson', methods=['POST'])
-def update_persons():
-    return 'update person'
+# @app.route('/getPersons', methods=['POST'])
+# def get_persons():
+#     return persons
+#
+# ###Pour récupérer les paramètres d'une requête
+# ###Flask met à disposition un objet request
+# @app.route('/getPerson', methods=['POST'])
+# def get_person():
+#     return persons[request.args.id]
+#
+# @app.route('/addPerson', methods=['POST'])
+# def add_persons():
+#     return 'add person'
+#
+# @app.route('/updatePerson', methods=['POST'])
+# def update_persons():
+#     return 'update person'
 
 ##routes avec niveau 2
 ##Personnes
 @app.route('/persons', methods=['GET'])
 def get_persons():
     return persons
+
+@app.route('/persons/<int:id>', methods=['GET'])
+def get_person(id):
+    return persons[id]
+
+
 
 @app.route('/persons', methods=['POST'])
 def post_person():
@@ -75,22 +87,22 @@ def put_person():
 def delete_person():
     return 'delete'
 
-##Adresses
-@app.route('/addresses', methods=['GET'])
-def get_addresses():
-    return persons
-
-@app.route('/addresses', methods=['POST'])
-def post_addresses():
-    return 'post'
-
-@app.route('/addresses', methods=['PUT'])
-def put_addresses():
-    return 'put'
-
-@app.route('/addresses', methods=['DELETE'])
-def delete_addresses():
-    return 'delete'
+# ##Adresses
+# @app.route('/addresses', methods=['GET'])
+# def get_addresses():
+#     return persons
+#
+# @app.route('/addresses', methods=['POST'])
+# def post_addresses():
+#     return 'post'
+#
+# @app.route('/addresses', methods=['PUT'])
+# def put_addresses():
+#     return 'put'
+#
+# @app.route('/addresses', methods=['DELETE'])
+# def delete_addresses():
+#     return 'delete'
 
 
 if __name__ == '__main__':
