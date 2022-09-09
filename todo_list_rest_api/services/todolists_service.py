@@ -46,3 +46,21 @@ class TodosListService:
         todoitem = TodoItem(task_name)
         todolist.add_item(todoitem)
         return todoitem
+
+    def delete_todoitem_from_todos_list(self, todolist_id, todoitem_id):
+        todolist = None
+        todoitem = None
+        for t in self.todos_lists:
+            if t.id == todolist_id:
+                todolist = t
+                break
+        if todolist is None:
+            raise ValueError("No todolist with this id")
+        for item in todolist.items:
+            if item.id == todoitem_id:
+                todoitem = item
+                break
+        if todoitem is None:
+            raise ValueError("No todoitem with this id")
+        todolist.items.remove(todoitem)
+        return True

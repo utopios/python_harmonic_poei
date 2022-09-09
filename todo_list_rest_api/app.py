@@ -69,7 +69,11 @@ def post_todoitems(todolist_id):
 ###Pour supprimer un todoitem dans une todolist
 @app.route('/todolists/<int:todolist_id>/todoitems/<int:todoitem_id>', methods=['DELETE'])
 def delete_todoitems(todolist_id, todoitem_id):
-    return "delete todoitems of todolist"
+    try:
+        return service.delete_todoitem_from_todos_list(todolist_id, todoitem_id)
+
+    except:
+        return "Not found", 404
 
 ###Pour modifier un todoitem dans une todolist
 @app.route('/todolists/<int:todolist_id>/todoitems/<int:todoitem_id>', methods=['PUT'])
