@@ -1,18 +1,16 @@
-from flask import Flask
+from flask import Flask, request
+
+from services.todolists_service import TodosListService
+from utils.generic_encoder import GenericEncoder
 
 app = Flask(__name__)
 
 
-class TodosList:
-    pass
-
-class TodoItem:
-    pass
-
+service =TodosListService()
 ##endpoint pour récupérer la totalité des todosList => collection todoList
 @app.route('/todolists', methods=['GET'])
 def get_todolists():
-    return "list todolist"
+    return GenericEncoder().encode(service.todos_lists)
 
 ###endpoint pour récupérer une seule todolist
 @app.route('/todolists/<int:id>', methods=['GET'])
@@ -22,7 +20,9 @@ def get_todolist(id):
 ##endpoint pour ajouter une todolist
 @app.route('/todolists', methods=['POST'])
 def post_todolist():
-    return "add todolist"
+    title = request.json.get("title")
+    todoslist = service.add_todo_list(title)
+    return  GenericEncoder().encode(todoslist)
 
 ##endpoint pour supprimer la todolist
 @app.route('/todolists/<int:id>', methods=['DELETE'])
