@@ -1,3 +1,4 @@
+from models.todo_item import TodoItem
 from models.todos_list import TodosList
 
 
@@ -33,3 +34,15 @@ class TodosListService:
         if todolist is not None:
             return todolist
         raise ValueError("No todolist with this id")
+
+    def add_todoitem_to_todos_list(self, todolist_id, task_name):
+        todolist = None
+        for t in self.todos_lists:
+            if t.id == todolist_id:
+                todolist = t
+                break
+        if todolist is None:
+            raise ValueError("No todolist with this id")
+        todoitem = TodoItem(task_name)
+        todolist.add_item(todoitem)
+        return todoitem

@@ -58,7 +58,13 @@ def get_todoitems(todolist_id):
 ###Pour ajouter un todoitem dans une todolist
 @app.route('/todolists/<int:todolist_id>/todoitems', methods=['POST'])
 def post_todoitems(todolist_id):
-    return "add todoitems of todolist"
+    task_name = request.json.get("task_name")
+    try:
+        item = service.add_todoitem_to_todos_list(todolist_id, task_name)
+        return GenericEncoder().encode(item)
+    except:
+        return "Not found", 404
+
 
 ###Pour supprimer un todoitem dans une todolist
 @app.route('/todolists/<int:todolist_id>/todoitems/<int:todoitem_id>', methods=['DELETE'])
