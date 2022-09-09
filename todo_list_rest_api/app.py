@@ -60,7 +60,7 @@ def delete_todoitems(todolist_id, todoitem_id):
 
 ###Pour modifier un todoitem dans une todolist
 @app.route('/todolists/<int:todolist_id>/todoitems/<int:todoitem_id>', methods=['PUT'])
-def update_todoitems(todolist_id, toditem_id):
+def update_todoitems(todolist_id, todoitem_id):
     return "update todoitems of todolist"
 
 if __name__ == '__main__':
