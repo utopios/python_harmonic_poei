@@ -1,8 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+
+from models.person import Person, PersonEncoder
 
 app = Flask(__name__)
 
-#app.config["FLASK_DEBUG"] = True
+app.config["DEBUG"] = True
 
 persons = ["toto", "tata", "titi"]
 
@@ -67,18 +69,35 @@ persons = ["toto", "tata", "titi"]
 ##Personnes
 @app.route('/persons', methods=['GET'])
 def get_persons():
-    return persons
+    return jsonify(persons)
 
 @app.route('/persons/<int:id>', methods=['GET'])
 def get_person(id):
-    return persons[id]
+    ###Récupération des données envoyées dans l'url de la requêtes
+    ##pas nécessaires car flask récupère l'args et l'injecte dans la méthode sous forme de paramètre
+    person_id= request.args.get('id')
+    return persons[person_id]
+
 
 
 
 @app.route('/persons', methods=['POST'])
 def post_person():
-    return 'post'
+    ##Récupération des données dans les forms de la requête
+    #first_name = request.form.get('first_name')
+    #last_name = request.form.get('last_name')
 
+    ##Eécupération des données sous format json dans le corps de la requete
+    first_name = request.json.get('first_name')
+    last_name = request.json.get('last_name')
+
+    # person = {'first_name': first_name, 'last_name': last_name}
+    person = Person(first_name, last_name)
+
+
+    ###Action pour ajouter la person
+    return jsonify(PersonEncoder().encode(person))
+    #return person
 @app.route('/persons', methods=['PUT'])
 def put_person():
     return 'put'
@@ -90,7 +109,7 @@ def delete_person():
 # ##Adresses
 # @app.route('/addresses', methods=['GET'])
 # def get_addresses():
-#     return persons
+#     return adresses
 #
 # @app.route('/addresses', methods=['POST'])
 # def post_addresses():
