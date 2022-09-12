@@ -1,7 +1,7 @@
 class Order:
     count = 0
 
-    def __init__(self, title, price, stock):
+    def __init__(self):
         Order.count += 1
         self.id = Order.count
         self.products = []
