@@ -3,13 +3,18 @@ from flask import request
 from services.todos_service import TodosService
 from utils.generic_encoder import GenericEncoder
 
-
+###reqparse de flask-restful permet d'ajouter des customs validator à utiliser dans la configuration du parseur.
+def custom_validator(value:str):
+    if len(value) <= 2:
+        raise ValueError("title avec min 2 caractère")
+    return value
 class TodoListResource(Resource):
 
     ##Un objet qui permet de lire les données envoyées dans la requetes (json form,...)
     parser = reqparse.RequestParser()
     ##Configuration des paramètres à récupérer
-    parser.add_argument('title', type=str, required=True, help="Title obligatoire")
+    # parser.add_argument('title', type=str, required=True, help="Title obligatoire")
+    parser.add_argument('title', type=custom_validator, required=True, help="Title obligatoire ou moins de 2 caractères")
     def __init__(self):
         self.service = TodosService()
 
