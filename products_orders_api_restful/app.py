@@ -11,4 +11,4 @@ api = Api(app)
 ##ressources product
 api.add_resource(ProductResource, '/products', '/products/<int:id>', endpoint='products')
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=80)
