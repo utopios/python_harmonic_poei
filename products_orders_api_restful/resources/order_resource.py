@@ -21,7 +21,7 @@ def products_validator(value):
 
 class OrderResource(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument("products", type=list, help="Merci d'ajouter les ids des produits")
+    parser.add_argument("products", type=int, action="append", help="Merci d'ajouter les ids des produits")
 
     def __init__(self):
         self.order_service = OrderService()
