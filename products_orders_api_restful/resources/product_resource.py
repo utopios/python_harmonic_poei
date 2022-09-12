@@ -41,3 +41,10 @@ class ProductResource(Resource):
                 return GenericEncoder().encode(self.product_service.get_product_by_id(id))
             except ValueError as err:
                 return str(err), 404
+
+    def put(self, id):
+        data = ProductResource.parser.parse_args()
+        try:
+            return self.product_service.update_product(id,data['title'], data['price'], data['stock'])
+        except Exception as err:
+            return str(err), 500

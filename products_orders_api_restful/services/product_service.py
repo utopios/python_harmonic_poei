@@ -60,7 +60,15 @@ class ProductService:
         except ValueError as err:
             raise err
 
-
+    def update_product(self, id, new_title, new_price, new_stock):
+        try:
+            product = self._find(id)
+            product.title = new_title
+            product.price = new_price
+            product.stock = new_stock
+            return True
+        except ValueError as err:
+            raise err
     def get_products(self):
         return self.products
 
