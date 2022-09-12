@@ -21,15 +21,16 @@ def products_validator(value):
 
 class OrderResource(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument("products", type=products_validator, required=True, help="Merci d'ajouter les ids des produits")
+    parser.add_argument("products", type=list, help="Merci d'ajouter les ids des produits")
 
     def __init__(self):
         self.order_service = OrderService()
 
     def post(self):
         data = OrderResource.parser.parse_args()
+        products = products_validator(data["products"])
         try:
-            order = self.order_service.add_order(data)
+            order = self.order_service.add_order(products)
             return GenericEncoder().encode(order)
         except Exception as err:
             return str(err), 500
