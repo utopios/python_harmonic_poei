@@ -1,11 +1,22 @@
+import threading
+
 from models.product import Product
 
 
 class ProductService:
 
     #products = []
-    def __init__(self):
-        self.products = []
+    _instance = None
+    ##Lock pour le thread safe
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            with cls._lock:
+                if cls._instance is None:
+                    cls._instance = super(ProductService, cls).__new__(cls)
+                    cls._instance.products = []
+        return cls._instance
 
     # @staticmethod
     # def _find(id):
