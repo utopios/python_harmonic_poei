@@ -1,0 +1,14 @@
+from flask import Flask
+from flask_restful import Api
+
+from resources.product_resource import ProductResource
+
+app = Flask(__name__)
+
+##Création de l'api et l'ajout des ressources, Api de flask restful est un middleware (A avoir dans en detail dans la prtie sécurité)
+api = Api(app)
+
+##ressources product
+api.add_resource(ProductResource, '/products', '/products/<int:id>', endpoint='products')
+if __name__ == '__main__':
+    app.run()

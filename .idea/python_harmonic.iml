@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/cours_api_rest/venv" />
       <excludeFolder url="file://$MODULE_DIR$/demo_api_flask_restful/venv" />
       <excludeFolder url="file://$MODULE_DIR$/api_todoslists_flask_rstful/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/products_orders_api_restful/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
