@@ -20,9 +20,17 @@ class SimpleUser(db.Model):
     email = db.Column(db.String(200), nullable=False)
     __tablename__ = 'simple_user'
 
-##Création des tables
+    def __init__(self, email):
+        self.email = email
 
+
+##Création des tables
 db.create_all()
+
+##Pour l'ajout, on peut utiliser la session de flask-alchemy
+user = SimpleUser("ihab@utopios.net")
+db.session.add(user)
+db.session.commit()
 
 
 if __name__ == '__main__':
