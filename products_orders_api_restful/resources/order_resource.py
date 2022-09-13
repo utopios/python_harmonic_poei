@@ -1,7 +1,8 @@
 
 
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, marshal_with
 
+from fields.orders_fields_dto import resource_orders_fields
 from services.order_service import OrderService
 from services.product_service import ProductService
 from utils.generic_encoder import GenericEncoder
@@ -27,22 +28,26 @@ class OrderResource(Resource):
 
     def __init__(self):
         self.order_service = OrderService()
-
+    @marshal_with(resource_orders_fields)
     def post(self):
         data = OrderResource.parser.parse_args()
         #Récupérer les id products et vérfier si des produits avec chaque id existe bien à l'aide de la fonction de validation
         products = Validators.products_validator(data["products"])
         try:
             order = self.order_service.add_order(products)
-            return GenericEncoder().encode(order)
+            # return GenericEncoder().encode(order)
+            return order
         except Exception as err:
             return str(err), 500
 
+    @marshal_with(resource_orders_fields)
     def get(self, id=None):
         if id is not None:
-            return GenericEncoder().encode(self.order_service.get_orders())
+            # return GenericEncoder().encode(self.order_service.get_orders())
+            return self.order_service.get_orders()
         else:
             try:
-                return GenericEncoder().encode(self.order_service.get_order_by_id(id))
+                # return GenericEncoder().encode(self.order_service.get_order_by_id(id))
+                return self.order_service.get_order_by_id(id)
             except ValueError as err:
                 return str(err), 404
