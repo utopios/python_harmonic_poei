@@ -42,7 +42,7 @@ class OrderResource(Resource):
 
     @marshal_with(resource_orders_fields)
     def get(self, id=None):
-        if id is not None:
+        if id is None:
             # return GenericEncoder().encode(self.order_service.get_orders())
             return self.order_service.get_orders()
         else:
