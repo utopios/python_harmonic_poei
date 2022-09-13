@@ -5,19 +5,21 @@ from flask_restful import Resource, reqparse
 from services.order_service import OrderService
 from services.product_service import ProductService
 from utils.generic_encoder import GenericEncoder
+from utils.validators import Validators
+
 
 ##value est la valeur envoyée par l'utilisateur de l'api => dans ce cas value est une liste de products id
-def products_validator(value):
-    ##services product service pour vérifier et chercher les produits dans notre base de données
-    product_service = ProductService()
-    products = []
-    for id in value:
-        try:
-            product = product_service.get_product_by_id(id)
-            products.append(product)
-        except ValueError as err:
-            raise err
-    return products
+# def products_validator(value):
+#     ##services product service pour vérifier et chercher les produits dans notre base de données
+#     product_service = ProductService()
+#     products = []
+#     for id in value:
+#         try:
+#             product = product_service.get_product_by_id(id)
+#             products.append(product)
+#         except ValueError as err:
+#             raise err
+#     return products
 
 class OrderResource(Resource):
     parser = reqparse.RequestParser()
@@ -28,7 +30,8 @@ class OrderResource(Resource):
 
     def post(self):
         data = OrderResource.parser.parse_args()
-        products = products_validator(data["products"])
+        #Récupérer les id products et vérfier si des produits avec chaque id existe bien à l'aide de la fonction de validation
+        products = Validators.products_validator(data["products"])
         try:
             order = self.order_service.add_order(products)
             return GenericEncoder().encode(order)
