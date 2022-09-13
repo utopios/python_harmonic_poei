@@ -1,7 +1,9 @@
 import decimal
+from datetime import date
 
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, fields, marshal_with
 
+from fields.products_fields_dto import resource_products_fields
 from services.product_service import ProductService
 from utils.generic_encoder import GenericEncoder
 
@@ -17,11 +19,14 @@ class ProductResource(Resource):
     def __init__(self):
         self.product_service = ProductService()
 
+    @marshal_with(resource_products_fields)
     def post(self):
         data = ProductResource.parser.parse_args()
         try:
             product = self.product_service.add_product(data['title'], data['price'], data['stock'])
-            return GenericEncoder().encode(product)
+            # return GenericEncoder().encode(product)
+            # avec marshal_with => pas besoin d'encoder
+            return product
         except Exception as err:
             return str(err), 500
 
@@ -32,13 +37,17 @@ class ProductResource(Resource):
         except ValueError as err:
             return str(err), 404
 
-
+    @marshal_with(resource_products_fields)
     def get(self, id=None):
         if id is None:
-            return GenericEncoder().encode(self.product_service.get_products())
+            # return GenericEncoder().encode(self.product_service.get_products())
+            # avec marshal_with => pas besoin d'encoder
+            return self.product_service.get_products()
         else:
             try:
-                return GenericEncoder().encode(self.product_service.get_product_by_id(id))
+                #return GenericEncoder().encode(self.product_service.get_product_by_id(id))
+                # avec marshal_with => pas besoin d'encoder
+                return self.product_service.get_product_by_id(id)
             except ValueError as err:
                 return str(err), 404
 

@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 
 class Product:
     count = 0
@@ -8,3 +11,5 @@ class Product:
         self.title = title
         self.price = price
         self.stock = stock
+        self.created_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        self.updated_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")

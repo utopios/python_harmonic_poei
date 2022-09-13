@@ -1,4 +1,6 @@
+from datetime import datetime
 import threading
+
 
 from models.product import Product
 
@@ -66,6 +68,7 @@ class ProductService:
             product.title = new_title
             product.price = new_price
             product.stock = new_stock
+            product.updated_date = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             return True
         except ValueError as err:
             raise err
