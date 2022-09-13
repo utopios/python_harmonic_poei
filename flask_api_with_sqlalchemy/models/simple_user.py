@@ -15,7 +15,10 @@ class SimpleUser(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def json(self):
+        return {'email':self.email, 'id': self.id}
+
     ##Methode
     @classmethod
-    def find_by_email(cls,email):
+    def find_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
