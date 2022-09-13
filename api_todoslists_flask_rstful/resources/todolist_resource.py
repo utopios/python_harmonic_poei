@@ -1,3 +1,5 @@
+from datetime import date
+
 from flask_restful import Resource, reqparse, fields, marshal_with
 from flask import request
 from services.todos_service import TodosService
@@ -13,7 +15,9 @@ def custom_validator(value:str):
     ##indiquer les champs qu'on souhaite garder à l'aide de l(objet fields de flask-restful
     ##Par exemple pour les objets todolist, on garde le champ name de type string
 resources_fields_todos_list = {
-    'title': fields.String
+    ##paramètre attribute est pour changer le nom du champ pour cacher le vrai nom du champ
+    'new_name': fields.String(attribute='title'),
+    'date': fields.String(default=date.today().strftime("%d-%m-%y"))
 }
 
 class TodoListResource(Resource):
@@ -38,6 +42,7 @@ class TodoListResource(Resource):
             except ValueError as err:
                 return str(err), 404
 
+    @marshal_with(resources_fields_todos_list, envelope='resource')
     def post(self):
 
         ###On récupère les données à partir de l'objet request
@@ -46,8 +51,8 @@ class TodoListResource(Resource):
         #on utilise le parser, avec la méthode parse_args
         data = TodoListResource.parser.parse_args()
         todoslist = self.service.add_todo_list(data["title"])
-        return GenericEncoder().encode(todoslist)
-
+        # return GenericEncoder().encode(todoslist)
+        return todoslist
     def delete(self):
         pass
 
