@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, fields, marshal_with
 from flask import request
 from services.todos_service import TodosService
 from utils.generic_encoder import GenericEncoder
@@ -8,6 +8,14 @@ def custom_validator(value:str):
     if len(value) <= 2:
         raise ValueError("title avec min 2 caractère")
     return value
+
+###Demo utilisation des fonctions marsha_with:
+    ##indiquer les champs qu'on souhaite garder à l'aide de l(objet fields de flask-restful
+    ##Par exemple pour les objets todolist, on garde le champ name de type string
+resources_fields_todos_list = {
+    'title': fields.String
+}
+
 class TodoListResource(Resource):
 
     ##Un objet qui permet de lire les données envoyées dans la requetes (json form,...)
@@ -19,6 +27,8 @@ class TodoListResource(Resource):
         self.service = TodosService()
 
     #Les args d'url sont récupérés directement comme paramètre dans la méthode
+    ##Utilisation de marshal_with
+    @marshal_with(resources_fields_todos_list)
     def get(self, id = None):
         if id is None:
             return self.service.todos_lists
