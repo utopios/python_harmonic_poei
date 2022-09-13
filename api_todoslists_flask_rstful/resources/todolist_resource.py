@@ -17,7 +17,8 @@ def custom_validator(value:str):
 resources_fields_todos_list = {
     ##paramètre attribute est pour changer le nom du champ pour cacher le vrai nom du champ
     'new_name': fields.String(attribute='title'),
-    'date': fields.String(default=date.today().strftime("%d-%m-%y"))
+    'date': fields.String(default=date.today().strftime("%d-%m-%y")),
+    'url': fields.Url('todolist')
 }
 
 class TodoListResource(Resource):
