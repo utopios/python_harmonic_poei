@@ -1,5 +1,5 @@
 from flask import request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 from flask_restful import Resource
 from injector import inject
 
@@ -23,4 +23,9 @@ class JwtResource(Resource):
     ###Protected route
     @jwt_required()
     def get(self):
-        return "Allowed with jwt"
+        ###pour récupérer les claims ajoutés dans le JWT, on peut utiliser la fonction get_jwt()
+        claims = get_jwt()
+        if claims["role"] == "admin":
+            return "Allowed with jwt"
+        else:
+            return "Not Allowed", 401
