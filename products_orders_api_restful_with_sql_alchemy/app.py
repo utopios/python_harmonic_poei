@@ -1,36 +1,5 @@
-from flask import Flask
-from flask_injector import FlaskInjector, request
-from flask_restful import Api
+from utils.app_factory import create_app
 
-from repositories.genric_repository import GenericRepository
-from resources.order_resource import OrderResource
-from resources.product_resource import ProductResource
-from services.product_service import ProductService
-from utils.config import postgresql_string
-
-app = Flask(__name__)
-
-##Ajouter la configuration postgres à notre app
-app.config['SQLALCHEMY_DATABASE_URI'] =postgresql_string
-
-##Création de l'api et l'ajout des ressources, Api de flask restful est un middleware (A avoir dans en detail dans la prtie sécurité)
-api = Api(app)
-
-@app.before_first_request
-def initialize_db():
-    from utils.database import db
-    db.init_app(app)
-    db.create_all()
-
-##ressources product
-api.add_resource(ProductResource, '/products', '/products/<int:id>', endpoint='products')
-api.add_resource(OrderResource, '/orders', '/orders/<int:id>', endpoint='orders')
-
-def flask_injector_configuration(binder):
-    binder.bind(ProductService, to=ProductService, scope=request)
-    binder.bind(GenericRepository, to=GenericRepository, scope=request)
-
-FlaskInjector(app=app, modules=[flask_injector_configuration])
-
+app = create_app({'MODE': 'PROD'})
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
