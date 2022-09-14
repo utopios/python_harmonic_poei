@@ -1,8 +1,11 @@
 from flask import Flask
+from flask_injector import FlaskInjector, request
 from flask_restful import Api
 
+from repositories.genric_repository import GenericRepository
 from resources.order_resource import OrderResource
 from resources.product_resource import ProductResource
+from services.product_service import ProductService
 from utils.config import postgresql_string
 
 app = Flask(__name__)
@@ -22,6 +25,12 @@ def initialize_db():
 ##ressources product
 api.add_resource(ProductResource, '/products', '/products/<int:id>', endpoint='products')
 api.add_resource(OrderResource, '/orders', '/orders/<int:id>', endpoint='orders')
+
+def flask_injector_configuration(binder):
+    binder.bind(ProductService, to=ProductService, scope=request)
+    binder.bind(GenericRepository, to=GenericRepository, scope=request)
+
+FlaskInjector(app=app, modules=[flask_injector_configuration])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

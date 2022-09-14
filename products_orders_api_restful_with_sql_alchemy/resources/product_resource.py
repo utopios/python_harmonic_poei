@@ -2,6 +2,7 @@ import decimal
 from datetime import date
 
 from flask_restful import Resource, reqparse, fields, marshal_with
+from flask_injector import inject
 
 from fields.products_fields_dto import resource_products_fields
 from services.product_service import ProductService
@@ -15,9 +16,9 @@ class ProductResource(Resource):
     parser.add_argument("price", type=float, required=True, help="Merci d'ajouter un prix valide")
     parser.add_argument("stock", type=int, required=True, help="Merci d'ajouter un stock valide")
 
-
-    def __init__(self):
-        self.product_service = ProductService()
+    @inject
+    def __init__(self, service:ProductService):
+        self.product_service = service
 
     @marshal_with(resource_products_fields)
     def post(self):
