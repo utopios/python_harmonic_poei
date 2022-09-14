@@ -3,6 +3,7 @@ from flask_injector import request, FlaskInjector
 from flask_restful import Api
 
 from database import db
+from repository.mock_repository import MockRepository
 from repository.repository import Repository
 from resources.simple_user_resource import SimpleUserResource
 from services.simple_service import SimpleService
@@ -26,11 +27,11 @@ def app_factory(config):
         if config["MODE"] == "DEBUG":
             ##Le scope peut être request ou singleton
             ##On ajoute dans flaks-injector les service du mode debug ou test
-            binder.bind(SimpleService, to=SimpleService, scope=request)
-            binder.bind(Repository, to=Repository, scope=request)
+            binder.bind(Repository, to=MockRepository, scope=request)
         else:
-            binder.bind(SimpleService, to=SimpleService, scope=request)
             binder.bind(Repository, to=Repository, scope=request)
+
+        binder.bind(SimpleService, to=SimpleService, scope=request)
 
     FlaskInjector(app=app, modules=[configure])
 
