@@ -1,9 +1,13 @@
 from flask import Flask
+from flask_injector import FlaskInjector, request
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from injector import singleton
 
 from database import db
+from repository.repository import Repository
 from resources.simple_user_resource import SimpleUserResource
+from services.simple_service import SimpleService
 
 app = Flask(__name__)
 
@@ -37,5 +41,14 @@ def initialisation():
 
 api.add_resource(SimpleUserResource, '/simple', '/simple/<string:email>', endpoint='simple')
 
+###Configurer les dependances
+def configure(binder):
+    ##Le scope peut être request ou singleton
+    binder.bind(SimpleService, to=SimpleService, scope=request)
+    binder.bind(Repository, to=Repository, scope=request)
+
+
+###Utiliser flask injector pour créer un container de dependance et Inversion de controle
+FlaskInjector(app=app, modules=[configure])
 if __name__ == '__main__':
     app.run()
