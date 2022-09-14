@@ -6,5 +6,5 @@ def test_post_simple_resource_correct_value_status_code_200():
     ##Arrange
     app = app_factory({'MODE': 'DEBUG', 'DATABASE_URI': 'postgresql://cours:db@localhost:5431/demo_harmonic'})
     with app.test_client() as client:
-        response = client.post('/simple', json={'email': 'demo@demo.fr'})
+        response = client.post('/simple', json={'email': 'demo@demo.fr'}, headers={'Authorization': 'Bearer '})
         assert response.status_code == 200

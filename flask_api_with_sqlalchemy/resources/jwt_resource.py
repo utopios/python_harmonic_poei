@@ -1,4 +1,5 @@
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource
 from injector import inject
 
@@ -18,3 +19,8 @@ class JwtResource(Resource):
             return self.service.login(email, password)
         except ValueError as err:
             return str(err), 400
+
+    ###Protected route
+    @jwt_required()
+    def get(self):
+        return "Allowed with jwt"
