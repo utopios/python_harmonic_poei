@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from injector import singleton
 
 from database import db
+from repository.mock_repository import MockRepository
 from repository.repository import Repository
 from resources.simple_user_resource import SimpleUserResource
 from services.simple_service import SimpleService
@@ -46,6 +47,7 @@ def configure(binder):
     ##Le scope peut être request ou singleton
     binder.bind(SimpleService, to=SimpleService, scope=request)
     binder.bind(Repository, to=Repository, scope=request)
+    #binder.bind(Repository, to=MockRepository, scope=request)
 
 
 ###Utiliser flask injector pour créer un container de dependance et Inversion de controle
