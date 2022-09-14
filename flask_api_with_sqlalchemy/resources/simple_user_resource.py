@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from injector import inject
+from flask_injector import inject
 
 from models.simple_user import SimpleUser
 from services.simple_service import SimpleService
