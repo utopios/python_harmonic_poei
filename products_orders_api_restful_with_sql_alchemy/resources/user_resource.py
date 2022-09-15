@@ -24,6 +24,7 @@ class UserResource(Resource):
                ---
                tags:
                  - users
+                 - user
                parameters:
                  - in: body
                    name: body
