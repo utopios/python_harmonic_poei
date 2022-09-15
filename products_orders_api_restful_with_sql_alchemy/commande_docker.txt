@@ -1,0 +1,8 @@
+###CRéation de l'image
+docker build -t <nom_image> <chemin_vers_dockerfile>
+docker build -t order_flask_api .
+
+###Pour démarrer un container
+##-p pour le mappage des ports
+## -d dans un process séparé
+docker run -p 80:80 <Nom_image>

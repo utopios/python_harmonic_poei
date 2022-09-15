@@ -3,4 +3,6 @@ flask-restful
 flask-injector
 flask-sqlalchemy
 flask-jwt-extended
+flask-swagger
 psycopg2-binary
+gunicorn
