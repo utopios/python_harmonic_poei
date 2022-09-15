@@ -1,0 +1,6 @@
+flask
+flask-restful
+flask-injector
+flask-sqlalchemy
+flask-jwt-extended
+psycopg2-binary

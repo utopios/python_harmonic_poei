@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_injector import FlaskInjector, request
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
+from flask_swagger import swagger
 
 from repositories.genric_repository import GenericRepository
 from repositories.user_repository import UserRepository
@@ -45,6 +46,10 @@ def create_app(config):
     api.add_resource(UserResource, '/users',  endpoint='users')
     api.add_resource(LoginResource, '/users/login',  endpoint='login')
 
+    ##Ajouter une route pour la documentation swagger
+    @app.route('/doc')
+    def doc():
+        return jsonify(swagger(app))
     def flask_injector_configuration(binder):
         binder.bind(ProductService, to=ProductService, scope=request)
         binder.bind(GenericRepository, to=GenericRepository, scope=request)
