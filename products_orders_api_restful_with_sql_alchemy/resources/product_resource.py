@@ -1,6 +1,7 @@
 import decimal
 from datetime import date
 
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse, fields, marshal_with
 from flask_injector import inject
 
@@ -20,6 +21,7 @@ class ProductResource(Resource):
     def __init__(self, service:ProductService):
         self.product_service = service
 
+    @jwt_required()
     @marshal_with(resource_products_fields)
     def post(self):
         data = ProductResource.parser.parse_args()

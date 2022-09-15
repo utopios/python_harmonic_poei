@@ -16,3 +16,6 @@ class GenericRepository:
 
     def find_by_id(self, type, id):
         return db.session.query(type).get(id)
+
+    # def filter_one_by(self, type, filter_function):
+    #     return db.session.query(type).filter_by(filter_function).first()
