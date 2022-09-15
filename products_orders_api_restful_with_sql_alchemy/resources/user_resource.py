@@ -20,38 +20,32 @@ class UserResource(Resource):
     @marshal_with(resource_users_fields)
     def post(self):
         """
-        Create a new user
-        ---
-        tags:
-          - users
-        definitions:
-          - schema:
-              id: Group
-              properties:
-                name:
-                 type: string
-                 description: the group's name
-        parameters:
-          - in: body
-            name: body
-            schema:
-              id: User
-              required:
-                - email
-                - password
-                - role
-              properties:
-                email:
-                  type: string
-                  description: email for user
-                password:
-                  type: string
-                  description: password for user
-                role:
-                  description: role for user
-        responses:
-          201:
-
-        """
+               Create a new user
+               ---
+               tags:
+                 - users
+               parameters:
+                 - in: body
+                   name: body
+                   schema:
+                     id: User
+                     required:
+                       - email
+                       - password
+                       - role
+                     properties:
+                       email:
+                         type: string
+                         description: email for user
+                       password:
+                         type: string
+                         description: name for user
+                       role:
+                         type: string
+                         description: role for user
+               responses:
+                 200:
+                   description: User created
+               """
         data = UserResource.parser.parse_args()
         return self.user_service.save_user(data["email"], data["password"], data["role"])
