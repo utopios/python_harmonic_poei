@@ -5,7 +5,8 @@ from Cython.Distutils import build_ext
 
 ext_modules = [
     Extension("main", ["main.pyx"]),
-    Extension("fib", ["fib.pyx"])
+    Extension("fib", ["fib.pyx"]),
+    Extension("primes", ["primes.pyx"])
 ]
 
 setup(

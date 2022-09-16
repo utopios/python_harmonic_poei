@@ -1,6 +1,7 @@
 
 import main
 import fib
+import primes
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # print("Python function")
@@ -8,10 +9,16 @@ if __name__ == '__main__':
     # print("Cython Fucntion")
     # main.function_cython()
 
-    print("Fib ave python")
-    print(fib.fib_python(50))
+    # print("Fib ave python")
+    # print(fib.fib_python(50))
+    #
+    # print("Fib ave cython")
+    # print(fib.run_cython_fib(50))
 
-    print("Fib ave cython")
-    print(fib.run_cython_fib(50))
+    ##Get Primes
+    print("Get primes with python")
+    print(primes.get_primes(50))
+    print("Get primes with cython")
+    print(primes.run_get_primes_cython(50))
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
