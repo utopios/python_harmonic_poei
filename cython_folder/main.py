@@ -17,8 +17,8 @@ if __name__ == '__main__':
 
     ##Get Primes
     print("Get primes with python")
-    print(primes.get_primes(50))
+    print(primes.get_primes(10))
     print("Get primes with cython")
-    print(primes.run_get_primes_cython(50))
+    print(primes.run_get_primes_cython(10))
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

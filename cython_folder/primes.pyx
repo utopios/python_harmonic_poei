@@ -17,6 +17,7 @@ cdef int* get_primes_cython(const int limit):
         int index = 0
     while i < limit:
         if prime_cython(i):
+            print(i)
             primes[index] = i
             index += 1
         i += 1
@@ -45,12 +46,13 @@ def prime_python(n):
     return True
 
 
-cdef bint prime_cython(int n):
-    cdef int i
-    cdef int limit
+cdef bint prime_cython(long int n):
+    cdef long int i
+    cdef long int limit
     if n == 1:
         return False
     limit = floor(sqrt(n))
+
     i = 1
     while i < limit + 1:
         i += 1
