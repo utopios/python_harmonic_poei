@@ -43,9 +43,9 @@ def prime_python(n):
     return True
 
 
-cdef bint prime_cython(long int n):
-    cdef long int i
-    cdef long int limit
+cdef bint prime_cython(int n):
+    cdef int i
+    cdef int limit
     if n == 1:
         return False
     limit = floor(sqrt(n))
