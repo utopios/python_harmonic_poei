@@ -9,9 +9,9 @@ if __name__ == '__main__':
     # main.function_cython()
 
     print("Fib ave python")
-    print(fib.fib_python(500))
+    print(fib.fib_python(100))
 
     print("Fib ave cython")
-    print(fib.run_cython_fib(500))
+    print(fib.run_cython_fib(100))
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
