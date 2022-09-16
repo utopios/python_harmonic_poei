@@ -6,9 +6,9 @@ def fib_python(n):
         i += 1
     return a
 
-cdef int fib_cython( int n):
-    cdef  int i = 0
-    cdef  int a, b
+cdef long long fib_cython(int n):
+    cdef  long long i = 0
+    cdef  long long a, b
     a, b = 0, 1
     while i < n:
         a, b = b, b + a
