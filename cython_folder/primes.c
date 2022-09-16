@@ -1160,8 +1160,11 @@ static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, 
 /* PyIntCompare.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
 
-/* ModInt[long].proto */
-static CYTHON_INLINE long __Pyx_mod_long(long, long);
+/* DivInt[long].proto */
+static CYTHON_INLINE long __Pyx_div_long(long, long);
+
+/* ModInt[int].proto */
+static CYTHON_INLINE int __Pyx_mod_int(int, int);
 
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
@@ -1275,7 +1278,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'primes' */
 static int *__pyx_f_6primes_get_primes_cython(int const ); /*proto*/
-static int __pyx_f_6primes_prime_cython(long); /*proto*/
+static int __pyx_f_6primes_prime_cython(int); /*proto*/
 #define __Pyx_MODULE_NAME "primes"
 extern int __pyx_module_is_main_primes;
 int __pyx_module_is_main_primes = 0;
@@ -1996,110 +1999,63 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
 /* "primes.pyx":46
  * 
  * 
- * cdef bint prime_cython(long int n):             # <<<<<<<<<<<<<<
- *     cdef long int i
- *     cdef long int limit
+ * cdef bint prime_cython(int n):             # <<<<<<<<<<<<<<
+ *     cdef int i
+ *     cdef int limit
  */
 
-static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
-  long __pyx_v_i;
-  long __pyx_v_limit;
+static int __pyx_f_6primes_prime_cython(int __pyx_v_n) {
+  int __pyx_v_i;
+  int __pyx_v_limit;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  PyObject *__pyx_t_7 = NULL;
-  long __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("prime_cython", 0);
 
   /* "primes.pyx":49
- *     cdef long int i
- *     cdef long int limit
+ *     cdef int i
+ *     cdef int limit
  *     if n == 1:             # <<<<<<<<<<<<<<
  *         return False
- *     limit = floor(sqrt(n))
+ *     limit = n // 2
  */
   __pyx_t_1 = ((__pyx_v_n == 1) != 0);
   if (__pyx_t_1) {
 
     /* "primes.pyx":50
- *     cdef long int limit
+ *     cdef int limit
  *     if n == 1:
  *         return False             # <<<<<<<<<<<<<<
- *     limit = floor(sqrt(n))
+ *     limit = n // 2
  *     i = 1
  */
     __pyx_r = 0;
     goto __pyx_L0;
 
     /* "primes.pyx":49
- *     cdef long int i
- *     cdef long int limit
+ *     cdef int i
+ *     cdef int limit
  *     if n == 1:             # <<<<<<<<<<<<<<
  *         return False
- *     limit = floor(sqrt(n))
+ *     limit = n // 2
  */
   }
 
   /* "primes.pyx":51
  *     if n == 1:
  *         return False
- *     limit = floor(sqrt(n))             # <<<<<<<<<<<<<<
+ *     limit = n // 2             # <<<<<<<<<<<<<<
  *     i = 1
  *     while i < limit + 1:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_floor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyInt_From_long(__pyx_v_n); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_7)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_7);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
-    }
-  }
-  __pyx_t_4 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_7, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_5)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_5);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_8 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_8 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_limit = __pyx_t_8;
+  __pyx_v_limit = __Pyx_div_long(__pyx_v_n, 2);
 
   /* "primes.pyx":52
  *         return False
- *     limit = floor(sqrt(n))
+ *     limit = n // 2
  *     i = 1             # <<<<<<<<<<<<<<
  *     while i < limit + 1:
  *         i += 1
@@ -2107,7 +2063,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   __pyx_v_i = 1;
 
   /* "primes.pyx":53
- *     limit = floor(sqrt(n))
+ *     limit = n // 2
  *     i = 1
  *     while i < limit + 1:             # <<<<<<<<<<<<<<
  *         i += 1
@@ -2137,7 +2093,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
       __PYX_ERR(0, 55, __pyx_L1_error)
     }
-    __pyx_t_1 = ((__Pyx_mod_long(__pyx_v_n, __pyx_v_i) == 0) != 0);
+    __pyx_t_1 = ((__Pyx_mod_int(__pyx_v_n, __pyx_v_i) == 0) != 0);
     if (__pyx_t_1) {
 
       /* "primes.pyx":56
@@ -2173,19 +2129,13 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   /* "primes.pyx":46
  * 
  * 
- * cdef bint prime_cython(long int n):             # <<<<<<<<<<<<<<
- *     cdef long int i
- *     cdef long int limit
+ * cdef bint prime_cython(int n):             # <<<<<<<<<<<<<<
+ *     cdef int i
+ *     cdef int limit
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_WriteUnraisable("primes.prime_cython", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
@@ -2217,7 +2167,7 @@ static PyObject *__pyx_pw_6primes_7run_cython_prime(PyObject *__pyx_self, PyObje
 static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  long __pyx_t_1;
+  int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -2230,7 +2180,7 @@ static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__py
  *     return prime_cython(n)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_As_long(__pyx_v_n); if (unlikely((__pyx_t_1 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_n); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L1_error)
   __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_6primes_prime_cython(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
@@ -3316,9 +3266,17 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, 
         PyObject_RichCompare(op1, op2, Py_EQ));
 }
 
-/* ModInt[long] */
-static CYTHON_INLINE long __Pyx_mod_long(long a, long b) {
-    long r = a % b;
+/* DivInt[long] */
+static CYTHON_INLINE long __Pyx_div_long(long a, long b) {
+    long q = a / b;
+    long r = a - q*b;
+    q -= ((r != 0) & ((r ^ b) < 0));
+    return q;
+}
+
+/* ModInt[int] */
+static CYTHON_INLINE int __Pyx_mod_int(int a, int b) {
+    int r = a % b;
     r += ((r != 0) & ((r ^ b) < 0)) * b;
     return r;
 }

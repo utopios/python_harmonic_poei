@@ -23,6 +23,8 @@ cdef int* get_primes_cython(const int limit):
     return primes
 
 def run_get_primes_cython(limit):
+    ###Cette fonction récupère le tableau de get_primes_cython et le va le convertir en list python,
+    ### la conversion n'est pas implicite entre un array en c et une liste en python
     primes_list = []
     result = get_primes_cython(limit)
     index = 0
