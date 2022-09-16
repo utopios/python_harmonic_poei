@@ -1,3 +1,4 @@
+import os
 from distutils.core import setup
 from distutils.extension import Extension
 
@@ -7,7 +8,9 @@ ext_modules = [
     # Extension("main", ["main.pyx"]),
     # Extension("fib", ["fib.pyx"]),
     # Extension("primes", ["primes.pyx"]),
-    Extension("cython_from_c", ["cython_from_c.pyx", "demo.c"])
+    # Extension("cython_from_c", ["cython_from_c.pyx", "demo.c"])
+    Extension("slide_21", ["slide_21.pyx", "slide_21_functions.c"])
+
 ]
 
 setup(
