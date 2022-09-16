@@ -2,7 +2,8 @@
 import main
 import fib
 import primes
-import demo_diseable_gil
+# import demo_diseable_gil
+import cython_from_c
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # print("Python function")
@@ -23,5 +24,8 @@ if __name__ == '__main__':
     # print(primes.run_get_primes_cython(10))
 
     # noGIL
-    demo_diseable_gil.demo_diseable_gil()
+    # demo_diseable_gil.demo_diseable_gil()
+
+    #C in Cython
+    cython_from_c.print_hello(b"ihab")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

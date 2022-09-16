@@ -4,10 +4,10 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext_modules = [
-    Extension("main", ["main.pyx"]),
-    Extension("fib", ["fib.pyx"]),
-    Extension("primes", ["primes.pyx"]),
-    Extension("demo_diseable_gil", ["demo_diseable_gil.pyx"])
+    # Extension("main", ["main.pyx"]),
+    # Extension("fib", ["fib.pyx"]),
+    # Extension("primes", ["primes.pyx"]),
+    Extension("cython_from_c", ["cython_from_c.pyx", "demo.c"])
 ]
 
 setup(
