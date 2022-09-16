@@ -1131,7 +1131,7 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
 /* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_PY_LONG_LONG(PY_LONG_LONG value);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
@@ -1160,7 +1160,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
 /* Module declarations from 'fib' */
-static int __pyx_f_3fib_fib_cython(int); /*proto*/
+static PY_LONG_LONG __pyx_f_3fib_fib_cython(int); /*proto*/
 #define __Pyx_MODULE_NAME "fib"
 extern int __pyx_module_is_main_fib;
 int __pyx_module_is_main_fib = 0;
@@ -1306,7 +1306,7 @@ static PyObject *__pyx_pf_3fib_fib_python(CYTHON_UNUSED PyObject *__pyx_self, Py
  *         i += 1
  *     return a             # <<<<<<<<<<<<<<
  * 
- * cdef int fib_cython(int n):
+ * cdef long long int fib_cython(int n):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_a);
@@ -1337,16 +1337,16 @@ static PyObject *__pyx_pf_3fib_fib_python(CYTHON_UNUSED PyObject *__pyx_self, Py
 /* "fib.pyx":9
  *     return a
  * 
- * cdef int fib_cython(int n):             # <<<<<<<<<<<<<<
- *     cdef  long long i = 0
- *     cdef  long long a, b
+ * cdef long long int fib_cython(int n):             # <<<<<<<<<<<<<<
+ *     cdef  long long int i = 0
+ *     cdef  long long int a, b
  */
 
-static int __pyx_f_3fib_fib_cython(int __pyx_v_n) {
+static PY_LONG_LONG __pyx_f_3fib_fib_cython(int __pyx_v_n) {
   PY_LONG_LONG __pyx_v_i;
   PY_LONG_LONG __pyx_v_a;
   PY_LONG_LONG __pyx_v_b;
-  int __pyx_r;
+  PY_LONG_LONG __pyx_r;
   __Pyx_RefNannyDeclarations
   PY_LONG_LONG __pyx_t_1;
   PY_LONG_LONG __pyx_t_2;
@@ -1355,16 +1355,16 @@ static int __pyx_f_3fib_fib_cython(int __pyx_v_n) {
 
   /* "fib.pyx":10
  * 
- * cdef int fib_cython(int n):
- *     cdef  long long i = 0             # <<<<<<<<<<<<<<
- *     cdef  long long a, b
+ * cdef long long int fib_cython(int n):
+ *     cdef  long long int i = 0             # <<<<<<<<<<<<<<
+ *     cdef  long long int a, b
  *     a, b = 0, 1
  */
   __pyx_v_i = 0;
 
   /* "fib.pyx":12
- *     cdef  long long i = 0
- *     cdef  long long a, b
+ *     cdef  long long int i = 0
+ *     cdef  long long int a, b
  *     a, b = 0, 1             # <<<<<<<<<<<<<<
  *     while i < n:
  *         a, b = b, b + a
@@ -1375,7 +1375,7 @@ static int __pyx_f_3fib_fib_cython(int __pyx_v_n) {
   __pyx_v_b = __pyx_t_2;
 
   /* "fib.pyx":13
- *     cdef  long long a, b
+ *     cdef  long long int a, b
  *     a, b = 0, 1
  *     while i < n:             # <<<<<<<<<<<<<<
  *         a, b = b, b + a
@@ -1420,9 +1420,9 @@ static int __pyx_f_3fib_fib_cython(int __pyx_v_n) {
   /* "fib.pyx":9
  *     return a
  * 
- * cdef int fib_cython(int n):             # <<<<<<<<<<<<<<
- *     cdef  long long i = 0
- *     cdef  long long a, b
+ * cdef long long int fib_cython(int n):             # <<<<<<<<<<<<<<
+ *     cdef  long long int i = 0
+ *     cdef  long long int a, b
  */
 
   /* function exit code */
@@ -1469,7 +1469,7 @@ static PyObject *__pyx_pf_3fib_2run_cython_fib(CYTHON_UNUSED PyObject *__pyx_sel
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_n); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_f_3fib_fib_cython(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_f_3fib_fib_cython(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -2570,31 +2570,31 @@ raise_neg_overflow:
 }
 
 /* CIntToPy */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_PY_LONG_LONG(PY_LONG_LONG value) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
+    const PY_LONG_LONG neg_one = (PY_LONG_LONG) -1, const_zero = (PY_LONG_LONG) 0;
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
 #pragma GCC diagnostic pop
 #endif
     const int is_unsigned = neg_one > const_zero;
     if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
+        if (sizeof(PY_LONG_LONG) < sizeof(long)) {
             return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
+        } else if (sizeof(PY_LONG_LONG) <= sizeof(unsigned long)) {
             return PyLong_FromUnsignedLong((unsigned long) value);
 #ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+        } else if (sizeof(PY_LONG_LONG) <= sizeof(unsigned PY_LONG_LONG)) {
             return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
 #endif
         }
     } else {
-        if (sizeof(int) <= sizeof(long)) {
+        if (sizeof(PY_LONG_LONG) <= sizeof(long)) {
             return PyInt_FromLong((long) value);
 #ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+        } else if (sizeof(PY_LONG_LONG) <= sizeof(PY_LONG_LONG)) {
             return PyLong_FromLongLong((PY_LONG_LONG) value);
 #endif
         }
@@ -2602,7 +2602,7 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
     {
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
+        return _PyLong_FromByteArray(bytes, sizeof(PY_LONG_LONG),
                                      little, !is_unsigned);
     }
 }

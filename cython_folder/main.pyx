@@ -26,3 +26,9 @@ def function_cython():
     t = t2 - t1
 
     print("%.100f" % t)
+
+def run_python_pointeur(chaine):
+    demo_pointeur(chaine)
+
+cdef void demo_pointeur(char* msg):
+    print(msg)
