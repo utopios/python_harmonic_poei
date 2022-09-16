@@ -28,8 +28,10 @@ def run_get_primes_cython(limit):
     ### la conversion n'est pas implicite entre un array en c et une liste en python
     primes_list = []
     result = get_primes_cython(limit)
+
     index = 0
     while index < limit:
+        print(result[index])
         primes_list.append(result[index])
         index += 1
     return primes_list
