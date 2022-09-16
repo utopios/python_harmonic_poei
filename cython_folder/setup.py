@@ -6,7 +6,8 @@ from Cython.Distutils import build_ext
 ext_modules = [
     Extension("main", ["main.pyx"]),
     Extension("fib", ["fib.pyx"]),
-    Extension("primes", ["primes.pyx"])
+    Extension("primes", ["primes.pyx"]),
+    Extension("demo_diseable_gil", ["demo_diseable_gil.pyx"])
 ]
 
 setup(
