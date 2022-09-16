@@ -1157,6 +1157,32 @@ static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, 
     (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
 #endif
 
+/* ModInt[int].proto */
+static CYTHON_INLINE int __Pyx_mod_int(int, int);
+
+/* ListCompAppend.proto */
+#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
+static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len)) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        __Pyx_SET_SIZE(list, len + 1);
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
+#endif
+
+/* PyIntCompare.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
+
+/* ModInt[long].proto */
+static CYTHON_INLINE long __Pyx_mod_long(long, long);
+
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1197,29 +1223,6 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 static void __Pyx_WriteUnraisable(const char *name, int clineno,
                                   int lineno, const char *filename,
                                   int full_traceback, int nogil);
-
-/* ListCompAppend.proto */
-#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
-static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
-    PyListObject* L = (PyListObject*) list;
-    Py_ssize_t len = Py_SIZE(list);
-    if (likely(L->allocated > len)) {
-        Py_INCREF(x);
-        PyList_SET_ITEM(list, len, x);
-        __Pyx_SET_SIZE(list, len + 1);
-        return 0;
-    }
-    return PyList_Append(list, x);
-}
-#else
-#define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
-#endif
-
-/* PyIntCompare.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
-
-/* ModInt[long].proto */
-static CYTHON_INLINE long __Pyx_mod_long(long, long);
 
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
@@ -1265,20 +1268,20 @@ static PyObject* __pyx_print = 0;
 static PyObject* __pyx_print_kwargs = 0;
 #endif
 
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
-
-/* PrintOne.proto */
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
-
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
+
+/* PrintOne.proto */
+static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
 
 /* FastTypeChecks.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -1301,7 +1304,8 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
 /* Module declarations from 'primes' */
-static int *__pyx_f_6primes_get_primes_cython(int const ); /*proto*/
+static PyObject *__pyx_f_6primes_get_primes_second(int const , int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_6primes_run_get_primes_cython(int const , int __pyx_skip_dispatch); /*proto*/
 static int __pyx_f_6primes_prime_cython(long); /*proto*/
 #define __Pyx_MODULE_NAME "primes"
 extern int __pyx_module_is_main_primes;
@@ -1310,7 +1314,6 @@ int __pyx_module_is_main_primes = 0;
 /* Implementation of 'primes' */
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_n[] = "n";
-static const char __pyx_k_p[] = "p";
 static const char __pyx_k_end[] = "end";
 static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
@@ -1319,60 +1322,48 @@ static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_sqrt[] = "sqrt";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_floor[] = "floor";
-static const char __pyx_k_index[] = "index";
 static const char __pyx_k_limit[] = "limit";
 static const char __pyx_k_print[] = "print";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_primes[] = "primes";
-static const char __pyx_k_result[] = "result";
 static const char __pyx_k_get_primes[] = "get_primes";
 static const char __pyx_k_primes_pyx[] = "primes.pyx";
-static const char __pyx_k_demo_result[] = "demo_result";
-static const char __pyx_k_primes_list[] = "primes_list";
 static const char __pyx_k_prime_python[] = "prime_python";
 static const char __pyx_k_run_cython_prime[] = "run_cython_prime";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_run_get_primes_cython[] = "run_get_primes_cython";
 static PyObject *__pyx_n_s_cline_in_traceback;
-static PyObject *__pyx_n_s_demo_result;
 static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_floor;
 static PyObject *__pyx_n_s_get_primes;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
-static PyObject *__pyx_n_s_index;
 static PyObject *__pyx_n_s_limit;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_math;
 static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_name;
-static PyObject *__pyx_n_s_p;
 static PyObject *__pyx_n_s_prime_python;
 static PyObject *__pyx_n_s_primes;
-static PyObject *__pyx_n_s_primes_list;
 static PyObject *__pyx_kp_s_primes_pyx;
 static PyObject *__pyx_n_s_print;
-static PyObject *__pyx_n_s_result;
 static PyObject *__pyx_n_s_run_cython_prime;
-static PyObject *__pyx_n_s_run_get_primes_cython;
 static PyObject *__pyx_n_s_sqrt;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_pf_6primes_get_primes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_limit); /* proto */
-static PyObject *__pyx_pf_6primes_2run_get_primes_cython(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_limit); /* proto */
-static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n); /* proto */
-static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n); /* proto */
+static PyObject *__pyx_pf_6primes_2get_primes_second(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_taille); /* proto */
+static PyObject *__pyx_pf_6primes_4run_get_primes_cython(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_limit); /* proto */
+static PyObject *__pyx_pf_6primes_6prime_python(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n); /* proto */
+static PyObject *__pyx_pf_6primes_8run_cython_prime(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__5;
-static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_codeobj__2;
 static PyObject *__pyx_codeobj__4;
 static PyObject *__pyx_codeobj__6;
-static PyObject *__pyx_codeobj__8;
 /* Late includes */
 
 /* "primes.pyx":3
@@ -1556,10 +1547,6 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
   int *__pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_primes_cython", 0);
 
   /* "primes.pyx":15
@@ -1585,7 +1572,7 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
  *         int index = 0
  *     while i < limit:             # <<<<<<<<<<<<<<
  *         if prime_cython(i):
- *             print(i)
+ *             primes[index] = i
  */
   while (1) {
     __pyx_t_1 = ((__pyx_v_i < __pyx_v_limit) != 0);
@@ -1595,8 +1582,8 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
  *         int index = 0
  *     while i < limit:
  *         if prime_cython(i):             # <<<<<<<<<<<<<<
- *             print(i)
  *             primes[index] = i
+ *             index += 1
  */
     __pyx_t_1 = (__pyx_f_6primes_prime_cython(__pyx_v_i) != 0);
     if (__pyx_t_1) {
@@ -1604,26 +1591,14 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
       /* "primes.pyx":20
  *     while i < limit:
  *         if prime_cython(i):
- *             print(i)             # <<<<<<<<<<<<<<
- *             primes[index] = i
- *             index += 1
- */
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-      /* "primes.pyx":21
- *         if prime_cython(i):
- *             print(i)
  *             primes[index] = i             # <<<<<<<<<<<<<<
  *             index += 1
  *         i += 1
  */
       (__pyx_v_primes[__pyx_v_index]) = __pyx_v_i;
 
-      /* "primes.pyx":22
- *             print(i)
+      /* "primes.pyx":21
+ *         if prime_cython(i):
  *             primes[index] = i
  *             index += 1             # <<<<<<<<<<<<<<
  *         i += 1
@@ -1635,12 +1610,12 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
  *         int index = 0
  *     while i < limit:
  *         if prime_cython(i):             # <<<<<<<<<<<<<<
- *             print(i)
  *             primes[index] = i
+ *             index += 1
  */
     }
 
-    /* "primes.pyx":23
+    /* "primes.pyx":22
  *             primes[index] = i
  *             index += 1
  *         i += 1             # <<<<<<<<<<<<<<
@@ -1650,12 +1625,12 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
     __pyx_v_i = (__pyx_v_i + 1);
   }
 
-  /* "primes.pyx":24
+  /* "primes.pyx":23
  *             index += 1
  *         i += 1
  *     return primes             # <<<<<<<<<<<<<<
  * 
- * def run_get_primes_cython(limit):
+ * cpdef get_primes_second(const int taille):
  */
   __pyx_r = __pyx_v_primes;
   goto __pyx_L0;
@@ -1669,200 +1644,299 @@ static int *__pyx_f_6primes_get_primes_cython(int const __pyx_v_limit) {
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_WriteUnraisable("primes.get_primes_cython", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "primes.pyx":26
+/* "primes.pyx":25
  *     return primes
  * 
- * def run_get_primes_cython(limit):             # <<<<<<<<<<<<<<
- *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
- *     ### la conversion n'est pas implicite entre un array en c et une liste en python
+ * cpdef get_primes_second(const int taille):             # <<<<<<<<<<<<<<
+ *     cdef int n, i, len
+ *     cdef int p[taille]
  */
 
+static PyObject *__pyx_pw_6primes_3get_primes_second(PyObject *__pyx_self, PyObject *__pyx_arg_taille); /*proto*/
+static PyObject *__pyx_f_6primes_get_primes_second(int const __pyx_v_taille, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_v_n;
+  int __pyx_v_i;
+  int __pyx_v_len;
+  int __pyx_v_p[__pyx_v_taille];
+  PyObject *__pyx_v_result_as_list = NULL;
+  int __pyx_v_prime;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  int *__pyx_t_3;
+  int *__pyx_t_4;
+  int *__pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("get_primes_second", 0);
+
+  /* "primes.pyx":28
+ *     cdef int n, i, len
+ *     cdef int p[taille]
+ *     print(taille)             # <<<<<<<<<<<<<<
+ *     len = 0
+ *     n = 2
+ */
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_taille); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_PrintOne(0, __pyx_t_1) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "primes.pyx":29
+ *     cdef int p[taille]
+ *     print(taille)
+ *     len = 0             # <<<<<<<<<<<<<<
+ *     n = 2
+ *     while len < taille:
+ */
+  __pyx_v_len = 0;
+
+  /* "primes.pyx":30
+ *     print(taille)
+ *     len = 0
+ *     n = 2             # <<<<<<<<<<<<<<
+ *     while len < taille:
+ *         for i in p[:len]:
+ */
+  __pyx_v_n = 2;
+
+  /* "primes.pyx":31
+ *     len = 0
+ *     n = 2
+ *     while len < taille:             # <<<<<<<<<<<<<<
+ *         for i in p[:len]:
+ *             if n % i == 0:
+ */
+  while (1) {
+    __pyx_t_2 = ((__pyx_v_len < __pyx_v_taille) != 0);
+    if (!__pyx_t_2) break;
+
+    /* "primes.pyx":32
+ *     n = 2
+ *     while len < taille:
+ *         for i in p[:len]:             # <<<<<<<<<<<<<<
+ *             if n % i == 0:
+ *                 break
+ */
+    __pyx_t_4 = (__pyx_v_p + __pyx_v_len);
+    for (__pyx_t_5 = __pyx_v_p; __pyx_t_5 < __pyx_t_4; __pyx_t_5++) {
+      __pyx_t_3 = __pyx_t_5;
+      __pyx_v_i = (__pyx_t_3[0]);
+
+      /* "primes.pyx":33
+ *     while len < taille:
+ *         for i in p[:len]:
+ *             if n % i == 0:             # <<<<<<<<<<<<<<
+ *                 break
+ *         else:
+ */
+      if (unlikely(__pyx_v_i == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+        __PYX_ERR(0, 33, __pyx_L1_error)
+      }
+      __pyx_t_2 = ((__Pyx_mod_int(__pyx_v_n, __pyx_v_i) == 0) != 0);
+      if (__pyx_t_2) {
+
+        /* "primes.pyx":34
+ *         for i in p[:len]:
+ *             if n % i == 0:
+ *                 break             # <<<<<<<<<<<<<<
+ *         else:
+ *             p[len] = n
+ */
+        goto __pyx_L6_break;
+
+        /* "primes.pyx":33
+ *     while len < taille:
+ *         for i in p[:len]:
+ *             if n % i == 0:             # <<<<<<<<<<<<<<
+ *                 break
+ *         else:
+ */
+      }
+    }
+    /*else*/ {
+
+      /* "primes.pyx":36
+ *                 break
+ *         else:
+ *             p[len] = n             # <<<<<<<<<<<<<<
+ *             len += 1
+ *         n += 1
+ */
+      (__pyx_v_p[__pyx_v_len]) = __pyx_v_n;
+
+      /* "primes.pyx":37
+ *         else:
+ *             p[len] = n
+ *             len += 1             # <<<<<<<<<<<<<<
+ *         n += 1
+ * 
+ */
+      __pyx_v_len = (__pyx_v_len + 1);
+    }
+    __pyx_L6_break:;
+
+    /* "primes.pyx":38
+ *             p[len] = n
+ *             len += 1
+ *         n += 1             # <<<<<<<<<<<<<<
+ * 
+ *     result_as_list  = [prime for prime in p[:len]]
+ */
+    __pyx_v_n = (__pyx_v_n + 1);
+  }
+
+  /* "primes.pyx":40
+ *         n += 1
+ * 
+ *     result_as_list  = [prime for prime in p[:len]]             # <<<<<<<<<<<<<<
+ *     return result_as_list
+ * 
+ */
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = (__pyx_v_p + __pyx_v_len);
+  for (__pyx_t_5 = __pyx_v_p; __pyx_t_5 < __pyx_t_4; __pyx_t_5++) {
+    __pyx_t_3 = __pyx_t_5;
+    __pyx_v_prime = (__pyx_t_3[0]);
+    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_prime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 40, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  }
+  __pyx_v_result_as_list = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "primes.pyx":41
+ * 
+ *     result_as_list  = [prime for prime in p[:len]]
+ *     return result_as_list             # <<<<<<<<<<<<<<
+ * 
+ * cpdef run_get_primes_cython(const int limit):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_result_as_list);
+  __pyx_r = __pyx_v_result_as_list;
+  goto __pyx_L0;
+
+  /* "primes.pyx":25
+ *     return primes
+ * 
+ * cpdef get_primes_second(const int taille):             # <<<<<<<<<<<<<<
+ *     cdef int n, i, len
+ *     cdef int p[taille]
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("primes.get_primes_second", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result_as_list);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* Python wrapper */
-static PyObject *__pyx_pw_6primes_3run_get_primes_cython(PyObject *__pyx_self, PyObject *__pyx_v_limit); /*proto*/
-static PyMethodDef __pyx_mdef_6primes_3run_get_primes_cython = {"run_get_primes_cython", (PyCFunction)__pyx_pw_6primes_3run_get_primes_cython, METH_O, 0};
-static PyObject *__pyx_pw_6primes_3run_get_primes_cython(PyObject *__pyx_self, PyObject *__pyx_v_limit) {
+static PyObject *__pyx_pw_6primes_3get_primes_second(PyObject *__pyx_self, PyObject *__pyx_arg_taille); /*proto*/
+static PyObject *__pyx_pw_6primes_3get_primes_second(PyObject *__pyx_self, PyObject *__pyx_arg_taille) {
+  int __pyx_v_taille;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("run_get_primes_cython (wrapper)", 0);
-  __pyx_r = __pyx_pf_6primes_2run_get_primes_cython(__pyx_self, ((PyObject *)__pyx_v_limit));
+  __Pyx_RefNannySetupContext("get_primes_second (wrapper)", 0);
+  assert(__pyx_arg_taille); {
+    __pyx_v_taille = __Pyx_PyInt_As_int(__pyx_arg_taille); if (unlikely((__pyx_v_taille == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("primes.get_primes_second", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6primes_2get_primes_second(__pyx_self, ((int)__pyx_v_taille));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6primes_2run_get_primes_cython(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_limit) {
-  PyObject *__pyx_v_primes_list = NULL;
-  int *__pyx_v_result;
-  PyObject *__pyx_v_demo_result = NULL;
-  PyObject *__pyx_v_index = NULL;
-  int __pyx_v_p;
+static PyObject *__pyx_pf_6primes_2get_primes_second(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_taille) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  int __pyx_t_2;
-  int *__pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  Py_ssize_t __pyx_t_5;
-  int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
-  int *__pyx_t_8;
-  int *__pyx_t_9;
-  int __pyx_t_10;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("get_primes_second", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_6primes_get_primes_second(__pyx_v_taille, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("primes.get_primes_second", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "primes.pyx":43
+ *     return result_as_list
+ * 
+ * cpdef run_get_primes_cython(const int limit):             # <<<<<<<<<<<<<<
+ *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
+ *     ### la conversion n'est pas implicite entre un array en c et une liste en python
+ */
+
+static PyObject *__pyx_pw_6primes_5run_get_primes_cython(PyObject *__pyx_self, PyObject *__pyx_arg_limit); /*proto*/
+static PyObject *__pyx_f_6primes_run_get_primes_cython(CYTHON_UNUSED int const __pyx_v_limit, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("run_get_primes_cython", 0);
 
-  /* "primes.pyx":29
- *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
- *     ### la conversion n'est pas implicite entre un array en c et une liste en python
- *     primes_list = []             # <<<<<<<<<<<<<<
- *     result = get_primes_cython(limit)
- *     demo_result = [p for p in result[:limit]]
- */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_primes_list = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "primes.pyx":30
- *     ### la conversion n'est pas implicite entre un array en c et une liste en python
- *     primes_list = []
- *     result = get_primes_cython(limit)             # <<<<<<<<<<<<<<
- *     demo_result = [p for p in result[:limit]]
- *     print(demo_result)
- */
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_limit); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_v_result = __pyx_f_6primes_get_primes_cython(__pyx_t_2);
-
-  /* "primes.pyx":31
- *     primes_list = []
- *     result = get_primes_cython(limit)
- *     demo_result = [p for p in result[:limit]]             # <<<<<<<<<<<<<<
- *     print(demo_result)
- *     index = 0
- */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_v_limit);
-  __pyx_t_4 = __pyx_v_limit;
-  __pyx_t_6 = (__pyx_t_4 == Py_None);
-  if (__pyx_t_6) {
-    __pyx_t_5 = PY_SSIZE_T_MAX;
-  } else {
-    __pyx_t_7 = __Pyx_PyIndex_AsSsize_t(__pyx_t_4); if (unlikely((__pyx_t_7 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
-    __pyx_t_5 = __pyx_t_7;
-  }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = (__pyx_v_result + __pyx_t_5);
-  for (__pyx_t_9 = __pyx_v_result; __pyx_t_9 < __pyx_t_8; __pyx_t_9++) {
-    __pyx_t_3 = __pyx_t_9;
-    __pyx_v_p = (__pyx_t_3[0]);
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_p); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  }
-  __pyx_v_demo_result = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "primes.pyx":32
- *     result = get_primes_cython(limit)
- *     demo_result = [p for p in result[:limit]]
- *     print(demo_result)             # <<<<<<<<<<<<<<
- *     index = 0
- *     while index < limit:
- */
-  if (__Pyx_PrintOne(0, __pyx_v_demo_result) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
-
-  /* "primes.pyx":33
- *     demo_result = [p for p in result[:limit]]
- *     print(demo_result)
- *     index = 0             # <<<<<<<<<<<<<<
- *     while index < limit:
- *         print(result[index])
- */
-  __Pyx_INCREF(__pyx_int_0);
-  __pyx_v_index = __pyx_int_0;
-
-  /* "primes.pyx":34
- *     print(demo_result)
- *     index = 0
- *     while index < limit:             # <<<<<<<<<<<<<<
- *         print(result[index])
- *         primes_list.append(result[index])
- */
-  while (1) {
-    __pyx_t_1 = PyObject_RichCompare(__pyx_v_index, __pyx_v_limit, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 34, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (!__pyx_t_6) break;
-
-    /* "primes.pyx":35
- *     index = 0
- *     while index < limit:
- *         print(result[index])             # <<<<<<<<<<<<<<
- *         primes_list.append(result[index])
- *         index += 1
- */
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_index); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyInt_From_int((__pyx_v_result[__pyx_t_5])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    if (__Pyx_PrintOne(0, __pyx_t_1) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-    /* "primes.pyx":36
- *     while index < limit:
- *         print(result[index])
- *         primes_list.append(result[index])             # <<<<<<<<<<<<<<
- *         index += 1
- *     return primes_list
- */
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_index); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyInt_From_int((__pyx_v_result[__pyx_t_5])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_primes_list, __pyx_t_1); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 36, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-    /* "primes.pyx":37
- *         print(result[index])
- *         primes_list.append(result[index])
- *         index += 1             # <<<<<<<<<<<<<<
- *     return primes_list
- * 
- */
-    __pyx_t_1 = __Pyx_PyInt_AddObjC(__pyx_v_index, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF_SET(__pyx_v_index, __pyx_t_1);
-    __pyx_t_1 = 0;
-  }
-
-  /* "primes.pyx":38
- *         primes_list.append(result[index])
- *         index += 1
- *     return primes_list             # <<<<<<<<<<<<<<
+  /* "primes.pyx":57
+ *     #     index += 1
+ *     # return primes_list
+ *     return get_primes_second(10)             # <<<<<<<<<<<<<<
  * 
  * def prime_python(n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_primes_list);
-  __pyx_r = __pyx_v_primes_list;
+  __pyx_t_1 = __pyx_f_6primes_get_primes_second(10, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "primes.pyx":26
- *     return primes
+  /* "primes.pyx":43
+ *     return result_as_list
  * 
- * def run_get_primes_cython(limit):             # <<<<<<<<<<<<<<
+ * cpdef run_get_primes_cython(const int limit):             # <<<<<<<<<<<<<<
  *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
  *     ### la conversion n'est pas implicite entre un array en c et une liste en python
  */
@@ -1870,20 +1944,68 @@ static PyObject *__pyx_pf_6primes_2run_get_primes_cython(CYTHON_UNUSED PyObject 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_AddTraceback("primes.run_get_primes_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_primes_list);
-  __Pyx_XDECREF(__pyx_v_demo_result);
-  __Pyx_XDECREF(__pyx_v_index);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "primes.pyx":40
- *     return primes_list
+/* Python wrapper */
+static PyObject *__pyx_pw_6primes_5run_get_primes_cython(PyObject *__pyx_self, PyObject *__pyx_arg_limit); /*proto*/
+static PyObject *__pyx_pw_6primes_5run_get_primes_cython(PyObject *__pyx_self, PyObject *__pyx_arg_limit) {
+  int __pyx_v_limit;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("run_get_primes_cython (wrapper)", 0);
+  assert(__pyx_arg_limit); {
+    __pyx_v_limit = __Pyx_PyInt_As_int(__pyx_arg_limit); if (unlikely((__pyx_v_limit == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("primes.run_get_primes_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6primes_4run_get_primes_cython(__pyx_self, ((int)__pyx_v_limit));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6primes_4run_get_primes_cython(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_limit) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("run_get_primes_cython", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_6primes_run_get_primes_cython(__pyx_v_limit, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("primes.run_get_primes_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "primes.pyx":59
+ *     return get_primes_second(10)
  * 
  * def prime_python(n):             # <<<<<<<<<<<<<<
  *     if n == 1:
@@ -1891,20 +2013,20 @@ static PyObject *__pyx_pf_6primes_2run_get_primes_cython(CYTHON_UNUSED PyObject 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6primes_5prime_python(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static PyMethodDef __pyx_mdef_6primes_5prime_python = {"prime_python", (PyCFunction)__pyx_pw_6primes_5prime_python, METH_O, 0};
-static PyObject *__pyx_pw_6primes_5prime_python(PyObject *__pyx_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pw_6primes_7prime_python(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
+static PyMethodDef __pyx_mdef_6primes_7prime_python = {"prime_python", (PyCFunction)__pyx_pw_6primes_7prime_python, METH_O, 0};
+static PyObject *__pyx_pw_6primes_7prime_python(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("prime_python (wrapper)", 0);
-  __pyx_r = __pyx_pf_6primes_4prime_python(__pyx_self, ((PyObject *)__pyx_v_n));
+  __pyx_r = __pyx_pf_6primes_6prime_python(__pyx_self, ((PyObject *)__pyx_v_n));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pf_6primes_6prime_python(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_v_limit = NULL;
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_r = NULL;
@@ -1920,20 +2042,20 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("prime_python", 0);
 
-  /* "primes.pyx":41
+  /* "primes.pyx":60
  * 
  * def prime_python(n):
  *     if n == 1:             # <<<<<<<<<<<<<<
  *         return False
  *     limit = floor(sqrt(n))
  */
-  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_n, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_n, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "primes.pyx":42
+    /* "primes.pyx":61
  * def prime_python(n):
  *     if n == 1:
  *         return False             # <<<<<<<<<<<<<<
@@ -1945,7 +2067,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "primes.pyx":41
+    /* "primes.pyx":60
  * 
  * def prime_python(n):
  *     if n == 1:             # <<<<<<<<<<<<<<
@@ -1954,16 +2076,16 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
  */
   }
 
-  /* "primes.pyx":43
+  /* "primes.pyx":62
  *     if n == 1:
  *         return False
  *     limit = floor(sqrt(n))             # <<<<<<<<<<<<<<
  *     i = 1
  *     while i < limit + 1:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_floor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_floor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_6 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -1977,7 +2099,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   }
   __pyx_t_4 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_6, __pyx_v_n) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_n);
   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -1993,13 +2115,13 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_limit = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "primes.pyx":44
+  /* "primes.pyx":63
  *         return False
  *     limit = floor(sqrt(n))
  *     i = 1             # <<<<<<<<<<<<<<
@@ -2009,7 +2131,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   __Pyx_INCREF(__pyx_int_1);
   __pyx_v_i = __pyx_int_1;
 
-  /* "primes.pyx":45
+  /* "primes.pyx":64
  *     limit = floor(sqrt(n))
  *     i = 1
  *     while i < limit + 1:             # <<<<<<<<<<<<<<
@@ -2017,43 +2139,43 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
  *         if n % i == 0:
  */
   while (1) {
-    __pyx_t_1 = __Pyx_PyInt_AddObjC(__pyx_v_limit, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_AddObjC(__pyx_v_limit, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyObject_RichCompare(__pyx_v_i, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_i, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 64, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (!__pyx_t_2) break;
 
-    /* "primes.pyx":46
+    /* "primes.pyx":65
  *     i = 1
  *     while i < limit + 1:
  *         i += 1             # <<<<<<<<<<<<<<
  *         if n % i == 0:
  *             return False
  */
-    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_v_i, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_v_i, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_i, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "primes.pyx":47
+    /* "primes.pyx":66
  *     while i < limit + 1:
  *         i += 1
  *         if n % i == 0:             # <<<<<<<<<<<<<<
  *             return False
  *     return True
  */
-    __pyx_t_3 = PyNumber_Remainder(__pyx_v_n, __pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Remainder(__pyx_v_n, __pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_3, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_3, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "primes.pyx":48
+      /* "primes.pyx":67
  *         i += 1
  *         if n % i == 0:
  *             return False             # <<<<<<<<<<<<<<
@@ -2065,7 +2187,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
       __pyx_r = Py_False;
       goto __pyx_L0;
 
-      /* "primes.pyx":47
+      /* "primes.pyx":66
  *     while i < limit + 1:
  *         i += 1
  *         if n % i == 0:             # <<<<<<<<<<<<<<
@@ -2075,7 +2197,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
     }
   }
 
-  /* "primes.pyx":49
+  /* "primes.pyx":68
  *         if n % i == 0:
  *             return False
  *     return True             # <<<<<<<<<<<<<<
@@ -2087,8 +2209,8 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_r = Py_True;
   goto __pyx_L0;
 
-  /* "primes.pyx":40
- *     return primes_list
+  /* "primes.pyx":59
+ *     return get_primes_second(10)
  * 
  * def prime_python(n):             # <<<<<<<<<<<<<<
  *     if n == 1:
@@ -2112,7 +2234,7 @@ static PyObject *__pyx_pf_6primes_4prime_python(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "primes.pyx":52
+/* "primes.pyx":71
  * 
  * 
  * cdef bint prime_cython(long int n):             # <<<<<<<<<<<<<<
@@ -2138,7 +2260,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("prime_cython", 0);
 
-  /* "primes.pyx":55
+  /* "primes.pyx":74
  *     cdef long int i
  *     cdef long int limit
  *     if n == 1:             # <<<<<<<<<<<<<<
@@ -2148,7 +2270,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   __pyx_t_1 = ((__pyx_v_n == 1) != 0);
   if (__pyx_t_1) {
 
-    /* "primes.pyx":56
+    /* "primes.pyx":75
  *     cdef long int limit
  *     if n == 1:
  *         return False             # <<<<<<<<<<<<<<
@@ -2158,7 +2280,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "primes.pyx":55
+    /* "primes.pyx":74
  *     cdef long int i
  *     cdef long int limit
  *     if n == 1:             # <<<<<<<<<<<<<<
@@ -2167,18 +2289,18 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
  */
   }
 
-  /* "primes.pyx":57
+  /* "primes.pyx":76
  *     if n == 1:
  *         return False
  *     limit = floor(sqrt(n))             # <<<<<<<<<<<<<<
  * 
  *     i = 1
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_floor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_floor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyInt_From_long(__pyx_v_n); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_long(__pyx_v_n); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -2193,7 +2315,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   __pyx_t_4 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_7, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -2209,14 +2331,14 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_8 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_8 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_8 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_limit = __pyx_t_8;
 
-  /* "primes.pyx":59
+  /* "primes.pyx":78
  *     limit = floor(sqrt(n))
  * 
  *     i = 1             # <<<<<<<<<<<<<<
@@ -2225,7 +2347,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
  */
   __pyx_v_i = 1;
 
-  /* "primes.pyx":60
+  /* "primes.pyx":79
  * 
  *     i = 1
  *     while i < limit + 1:             # <<<<<<<<<<<<<<
@@ -2236,7 +2358,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
     __pyx_t_1 = ((__pyx_v_i < (__pyx_v_limit + 1)) != 0);
     if (!__pyx_t_1) break;
 
-    /* "primes.pyx":61
+    /* "primes.pyx":80
  *     i = 1
  *     while i < limit + 1:
  *         i += 1             # <<<<<<<<<<<<<<
@@ -2245,7 +2367,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "primes.pyx":62
+    /* "primes.pyx":81
  *     while i < limit + 1:
  *         i += 1
  *         if n % i == 0:             # <<<<<<<<<<<<<<
@@ -2254,12 +2376,12 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
  */
     if (unlikely(__pyx_v_i == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 62, __pyx_L1_error)
+      __PYX_ERR(0, 81, __pyx_L1_error)
     }
     __pyx_t_1 = ((__Pyx_mod_long(__pyx_v_n, __pyx_v_i) == 0) != 0);
     if (__pyx_t_1) {
 
-      /* "primes.pyx":63
+      /* "primes.pyx":82
  *         i += 1
  *         if n % i == 0:
  *             return False             # <<<<<<<<<<<<<<
@@ -2269,7 +2391,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "primes.pyx":62
+      /* "primes.pyx":81
  *     while i < limit + 1:
  *         i += 1
  *         if n % i == 0:             # <<<<<<<<<<<<<<
@@ -2279,7 +2401,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
     }
   }
 
-  /* "primes.pyx":64
+  /* "primes.pyx":83
  *         if n % i == 0:
  *             return False
  *     return True             # <<<<<<<<<<<<<<
@@ -2289,7 +2411,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "primes.pyx":52
+  /* "primes.pyx":71
  * 
  * 
  * cdef bint prime_cython(long int n):             # <<<<<<<<<<<<<<
@@ -2312,7 +2434,7 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "primes.pyx":66
+/* "primes.pyx":85
  *     return True
  * 
  * def run_cython_prime(n):             # <<<<<<<<<<<<<<
@@ -2320,20 +2442,20 @@ static int __pyx_f_6primes_prime_cython(long __pyx_v_n) {
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6primes_7run_cython_prime(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
-static PyMethodDef __pyx_mdef_6primes_7run_cython_prime = {"run_cython_prime", (PyCFunction)__pyx_pw_6primes_7run_cython_prime, METH_O, 0};
-static PyObject *__pyx_pw_6primes_7run_cython_prime(PyObject *__pyx_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pw_6primes_9run_cython_prime(PyObject *__pyx_self, PyObject *__pyx_v_n); /*proto*/
+static PyMethodDef __pyx_mdef_6primes_9run_cython_prime = {"run_cython_prime", (PyCFunction)__pyx_pw_6primes_9run_cython_prime, METH_O, 0};
+static PyObject *__pyx_pw_6primes_9run_cython_prime(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("run_cython_prime (wrapper)", 0);
-  __pyx_r = __pyx_pf_6primes_6run_cython_prime(__pyx_self, ((PyObject *)__pyx_v_n));
+  __pyx_r = __pyx_pf_6primes_8run_cython_prime(__pyx_self, ((PyObject *)__pyx_v_n));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pf_6primes_8run_cython_prime(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   long __pyx_t_1;
@@ -2343,20 +2465,20 @@ static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("run_cython_prime", 0);
 
-  /* "primes.pyx":67
+  /* "primes.pyx":86
  * 
  * def run_cython_prime(n):
  *     return prime_cython(n)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_As_long(__pyx_v_n); if (unlikely((__pyx_t_1 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 67, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_6primes_prime_cython(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_long(__pyx_v_n); if (unlikely((__pyx_t_1 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_f_6primes_prime_cython(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "primes.pyx":66
+  /* "primes.pyx":85
  *     return True
  * 
  * def run_cython_prime(n):             # <<<<<<<<<<<<<<
@@ -2375,6 +2497,8 @@ static PyObject *__pyx_pf_6primes_6run_cython_prime(CYTHON_UNUSED PyObject *__py
 }
 
 static PyMethodDef __pyx_methods[] = {
+  {"get_primes_second", (PyCFunction)__pyx_pw_6primes_3get_primes_second, METH_O, 0},
+  {"run_get_primes_cython", (PyCFunction)__pyx_pw_6primes_5run_get_primes_cython, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -2421,28 +2545,22 @@ static struct PyModuleDef __pyx_moduledef = {
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
-  {&__pyx_n_s_demo_result, __pyx_k_demo_result, sizeof(__pyx_k_demo_result), 0, 0, 1, 1},
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_floor, __pyx_k_floor, sizeof(__pyx_k_floor), 0, 0, 1, 1},
   {&__pyx_n_s_get_primes, __pyx_k_get_primes, sizeof(__pyx_k_get_primes), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
-  {&__pyx_n_s_index, __pyx_k_index, sizeof(__pyx_k_index), 0, 0, 1, 1},
   {&__pyx_n_s_limit, __pyx_k_limit, sizeof(__pyx_k_limit), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_math, __pyx_k_math, sizeof(__pyx_k_math), 0, 0, 1, 1},
   {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
-  {&__pyx_n_s_p, __pyx_k_p, sizeof(__pyx_k_p), 0, 0, 1, 1},
   {&__pyx_n_s_prime_python, __pyx_k_prime_python, sizeof(__pyx_k_prime_python), 0, 0, 1, 1},
   {&__pyx_n_s_primes, __pyx_k_primes, sizeof(__pyx_k_primes), 0, 0, 1, 1},
-  {&__pyx_n_s_primes_list, __pyx_k_primes_list, sizeof(__pyx_k_primes_list), 0, 0, 1, 1},
   {&__pyx_kp_s_primes_pyx, __pyx_k_primes_pyx, sizeof(__pyx_k_primes_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
-  {&__pyx_n_s_result, __pyx_k_result, sizeof(__pyx_k_result), 0, 0, 1, 1},
   {&__pyx_n_s_run_cython_prime, __pyx_k_run_cython_prime, sizeof(__pyx_k_run_cython_prime), 0, 0, 1, 1},
-  {&__pyx_n_s_run_get_primes_cython, __pyx_k_run_get_primes_cython, sizeof(__pyx_k_run_get_primes_cython), 0, 0, 1, 1},
   {&__pyx_n_s_sqrt, __pyx_k_sqrt, sizeof(__pyx_k_sqrt), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
@@ -2467,40 +2585,28 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple_);
   __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_get_primes, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 3, __pyx_L1_error)
 
-  /* "primes.pyx":26
- *     return primes
- * 
- * def run_get_primes_cython(limit):             # <<<<<<<<<<<<<<
- *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
- *     ### la conversion n'est pas implicite entre un array en c et une liste en python
- */
-  __pyx_tuple__3 = PyTuple_Pack(6, __pyx_n_s_limit, __pyx_n_s_primes_list, __pyx_n_s_result, __pyx_n_s_demo_result, __pyx_n_s_index, __pyx_n_s_p); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_run_get_primes_cython, 26, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 26, __pyx_L1_error)
-
-  /* "primes.pyx":40
- *     return primes_list
+  /* "primes.pyx":59
+ *     return get_primes_second(10)
  * 
  * def prime_python(n):             # <<<<<<<<<<<<<<
  *     if n == 1:
  *         return False
  */
-  __pyx_tuple__5 = PyTuple_Pack(3, __pyx_n_s_n, __pyx_n_s_limit, __pyx_n_s_i); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 40, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_prime_python, 40, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(3, __pyx_n_s_n, __pyx_n_s_limit, __pyx_n_s_i); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__3);
+  __Pyx_GIVEREF(__pyx_tuple__3);
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_prime_python, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 59, __pyx_L1_error)
 
-  /* "primes.pyx":66
+  /* "primes.pyx":85
  *     return True
  * 
  * def run_cython_prime(n):             # <<<<<<<<<<<<<<
  *     return prime_cython(n)
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_n); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_run_cython_prime, 66, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_n); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_primes_pyx, __pyx_n_s_run_cython_prime, 85, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2821,39 +2927,27 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_primes, __pyx_t_2) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "primes.pyx":26
- *     return primes
- * 
- * def run_get_primes_cython(limit):             # <<<<<<<<<<<<<<
- *     ###Cette fonction rcupre le tableau de get_primes_cython et le va le convertir en list python,
- *     ### la conversion n'est pas implicite entre un array en c et une liste en python
- */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6primes_3run_get_primes_cython, NULL, __pyx_n_s_primes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_run_get_primes_cython, __pyx_t_2) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "primes.pyx":40
- *     return primes_list
+  /* "primes.pyx":59
+ *     return get_primes_second(10)
  * 
  * def prime_python(n):             # <<<<<<<<<<<<<<
  *     if n == 1:
  *         return False
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6primes_5prime_python, NULL, __pyx_n_s_primes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6primes_7prime_python, NULL, __pyx_n_s_primes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_prime_python, __pyx_t_2) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_prime_python, __pyx_t_2) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "primes.pyx":66
+  /* "primes.pyx":85
  *     return True
  * 
  * def run_cython_prime(n):             # <<<<<<<<<<<<<<
  *     return prime_cython(n)
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6primes_7run_cython_prime, NULL, __pyx_n_s_primes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_6primes_9run_cython_prime, NULL, __pyx_n_s_primes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_run_cython_prime, __pyx_t_2) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_run_cython_prime, __pyx_t_2) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "primes.pyx":1
@@ -3373,70 +3467,11 @@ static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED
 }
 #endif
 
-/* PyErrFetchRestore */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
+/* ModInt[int] */
+static CYTHON_INLINE int __Pyx_mod_int(int a, int b) {
+    int r = a % b;
+    r += ((r != 0) & ((r ^ b) < 0)) * b;
+    return r;
 }
 
 /* PyIntCompare */
@@ -3511,6 +3546,72 @@ static CYTHON_INLINE long __Pyx_mod_long(long a, long b) {
     long r = a % b;
     r += ((r != 0) & ((r ^ b) < 0)) * b;
     return r;
+}
+
+/* PyErrFetchRestore */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+}
+#endif
+
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
 }
 
 /* Import */
@@ -3821,6 +3922,28 @@ bad:
     Py_XDECREF(py_frame);
 }
 
+/* CIntFromPyVerify */
+#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
+
 /* Print */
 #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
 static PyObject *__Pyx_GetStdout(void) {
@@ -3924,103 +4047,6 @@ bad:
     if (kwargs != __pyx_print_kwargs)
         Py_XDECREF(kwargs);
     return -1;
-}
-#endif
-
-/* CIntFromPyVerify */
-#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
-
-/* CIntToPy */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const int neg_one = (int) -1, const_zero = (int) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-    }
-}
-
-/* PrintOne */
-#if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
-static int __Pyx_PrintOne(PyObject* f, PyObject *o) {
-    if (!f) {
-        if (!(f = __Pyx_GetStdout()))
-            return -1;
-    }
-    Py_INCREF(f);
-    if (PyFile_SoftSpace(f, 0)) {
-        if (PyFile_WriteString(" ", f) < 0)
-            goto error;
-    }
-    if (PyFile_WriteObject(o, f, Py_PRINT_RAW) < 0)
-        goto error;
-    if (PyFile_WriteString("\n", f) < 0)
-        goto error;
-    Py_DECREF(f);
-    return 0;
-error:
-    Py_DECREF(f);
-    return -1;
-    /* the line below is just to avoid C compiler
-     * warnings about unused functions */
-    return __Pyx_Print(f, NULL, 0);
-}
-#else
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
-    int res;
-    PyObject* arg_tuple = PyTuple_Pack(1, o);
-    if (unlikely(!arg_tuple))
-        return -1;
-    res = __Pyx_Print(stream, arg_tuple, 1);
-    Py_DECREF(arg_tuple);
-    return res;
 }
 #endif
 
@@ -4218,6 +4244,44 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int");
     return (int) -1;
+}
+
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
 }
 
 /* CIntToPy */
@@ -4453,6 +4517,43 @@ raise_neg_overflow:
         "can't convert negative value to long");
     return (long) -1;
 }
+
+/* PrintOne */
+#if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
+static int __Pyx_PrintOne(PyObject* f, PyObject *o) {
+    if (!f) {
+        if (!(f = __Pyx_GetStdout()))
+            return -1;
+    }
+    Py_INCREF(f);
+    if (PyFile_SoftSpace(f, 0)) {
+        if (PyFile_WriteString(" ", f) < 0)
+            goto error;
+    }
+    if (PyFile_WriteObject(o, f, Py_PRINT_RAW) < 0)
+        goto error;
+    if (PyFile_WriteString("\n", f) < 0)
+        goto error;
+    Py_DECREF(f);
+    return 0;
+error:
+    Py_DECREF(f);
+    return -1;
+    /* the line below is just to avoid C compiler
+     * warnings about unused functions */
+    return __Pyx_Print(f, NULL, 0);
+}
+#else
+static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
+    int res;
+    PyObject* arg_tuple = PyTuple_Pack(1, o);
+    if (unlikely(!arg_tuple))
+        return -1;
+    res = __Pyx_Print(stream, arg_tuple, 1);
+    Py_DECREF(arg_tuple);
+    return res;
+}
+#endif
 
 /* FastTypeChecks */
 #if CYTHON_COMPILING_IN_CPYTHON

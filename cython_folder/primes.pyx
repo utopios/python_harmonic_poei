@@ -17,24 +17,42 @@ cdef int* get_primes_cython(const int limit):
         int index = 0
     while i < limit:
         if prime_cython(i):
-            print(i)
             primes[index] = i
             index += 1
         i += 1
     return primes
 
-def run_get_primes_cython(limit):
+cpdef get_primes_second(const int taille):
+    cdef int n, i, len
+    cdef int p[taille]
+    print(taille)
+    len = 0
+    n = 2
+    while len < taille:
+        for i in p[:len]:
+            if n % i == 0:
+                break
+        else:
+            p[len] = n
+            len += 1
+        n += 1
+
+    result_as_list  = [prime for prime in p[:len]]
+    return result_as_list
+
+cpdef run_get_primes_cython(const int limit):
     ###Cette fonction récupère le tableau de get_primes_cython et le va le convertir en list python,
     ### la conversion n'est pas implicite entre un array en c et une liste en python
-    primes_list = []
-    result = get_primes_cython(limit)
-
-    index = 0
-    while index < limit:
-        print(result[index])
-        primes_list.append(result[index])
-        index += 1
-    return primes_list
+    # primes_list = []
+    # cdef int* result = get_primes_cython(limit)
+    #
+    #
+    # cdef int index = 0
+    # while index < limit:
+    #     primes_list.append(result[index])
+    #     index += 1
+    # return primes_list
+    return get_primes_second(10)
 
 def prime_python(n):
     if n == 1:
