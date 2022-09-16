@@ -4,7 +4,8 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext_modules = [
-    Extension("main", ["main.pyx"])
+    Extension("main", ["main.pyx"]),
+    Extension("fib", ["fib.pyx"])
 ]
 
 setup(
