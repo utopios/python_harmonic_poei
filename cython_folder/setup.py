@@ -9,8 +9,8 @@ ext_modules = [
     # Extension("fib", ["fib.pyx"]),
     # Extension("primes", ["primes.pyx"]),
     # Extension("cython_from_c", ["cython_from_c.pyx", "demo.c"])
-    Extension("slide_21", ["slide_21.pyx", "slide_21_functions.c"])
-
+    # Extension("slide_21", ["slide_21.pyx", "slide_21_functions.c"]),
+    Extension("correction_slide_18", ["correction_slide_18.pyx"])
 ]
 
 setup(
