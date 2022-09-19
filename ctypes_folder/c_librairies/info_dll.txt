@@ -1,3 +1,4 @@
 demo.dll :
     add_int, args[int, int] => return int
     add_float, args[float, float] => return float
+    add_float_ref, args[&float, &float, &float] => void
