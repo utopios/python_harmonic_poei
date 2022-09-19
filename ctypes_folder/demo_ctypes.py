@@ -13,12 +13,20 @@ lib = ctypes.cdll.LoadLibrary("./c_librairies/linux/demo.so")
 # print(result) #=> utilisation de add_float de librairies
 
 
-##Utilisation de byref
 
 a = ctypes.c_float(10)
 b = ctypes.c_float(20)
 c = ctypes.c_float()
 
-lib.add_float_ref(ctypes.byref(a), ctypes.byref(b), ctypes.byref(c))
+##Utilisation de byref
 
+#lib.add_float_ref(ctypes.byref(a), ctypes.byref(b), ctypes.byref(c))
+
+
+##Utilisation de pointer
+a_pointer= ctypes.pointer(a)
+b_pointer = ctypes.pointer(b)
+c_pointer = ctypes.pointer(c)
+
+lib.add_float_ref(a_pointer,b_pointer, c_pointer)
 print(c.value)
