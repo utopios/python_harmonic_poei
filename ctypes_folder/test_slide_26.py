@@ -6,6 +6,8 @@ import pytest
 @pytest.fixture(scope='session')
 def get_lib():
     lib = ctypes.cdll.LoadLibrary("./c_librairies/linux/cart.so")
+    ###pour windows
+    #lib = ctypes.windll.LoadLibrary(".c_libraries/windows/cart.dll")
     lib.is_correct_product.argtype = ctypes.c_int
     ##ou
     #lib.is_correct_product.argtypes = [ctypes.c_int]
