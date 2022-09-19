@@ -12,8 +12,12 @@ def get_lib():
     return lib
 
 def test_reverse_should_reverse_array(get_lib):
+    ###Une liste en python
     liste = [1,2,3,4]
+
+    ##Un tableau en pour une fonction en c
     tab = (ctypes.c_int * len(liste))(*liste)
+
     get_lib.reverse(tab, len(liste))
     result = [tab[i] for i in range(len(liste))]
     assert result == [4,3,2,1]
