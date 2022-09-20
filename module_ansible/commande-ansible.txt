@@ -7,4 +7,7 @@ ansible all -m apt -a "name=git"
 
 ##Correction slide 12
 ansible all -m copy -a "src=./demo.py dest=demo.py" -b
-ansible all -m shell -a "python3 demo.py"
+ansible all -m shell -a "python3 demo.py" -b
+
+##Une version avec le module command
+ansible all -m command -a "python3 demo.py" -b
