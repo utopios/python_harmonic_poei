@@ -10,4 +10,5 @@ ansible all -m copy -a "src=./demo.py dest=demo.py" -b
 ansible all -m shell -a "python3 demo.py" -b
 
 ##Une version avec le module command
+##l'option a est utilisé par défaut dans l'argument cmd du module command uniquement avec le cli 'ansible'
 ansible all -m command -a "python3 demo.py" -b
