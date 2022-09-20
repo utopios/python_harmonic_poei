@@ -3,4 +3,8 @@ ansible all -m <nom_module ping par exemple>
 
 ##Exemple d'utilisation du module apt 'pour distribution debian et ubntu'
 ansible all -m apt -a "update_cache=true" -b
-ansible all -m apt -a "name=git" -b
+ansible all -m apt -a "name=git" 
+
+##Correction slide 12
+ansible all -m copy -a "src=./demo.py dest=demo.py" -b
+ansible all -m shell -a "python3 demo.py"
