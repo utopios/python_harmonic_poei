@@ -21,12 +21,18 @@ def get_lib():
     return lib
 
 
-def test_calcule_total_correct_args_should_return_float(get_lib):
+@pytest.mark.parametrize("liste_cart_products, expected", [
+    ([CartProduct(1, 200),CartProduct(2, 300)], 800),
+    ([CartProduct(1, 200), CartProduct(-2, 300)], 0),
+    ([CartProduct(1, -200), CartProduct(2, 300)], 0),
+])
+def test_calcule_total_correct_args_should_return_float(liste_cart_products, expected, get_lib):
     #Arrange
-    cart_products_list = [CartProduct(1,100), CartProduct(3,200)]
-    cart_products_array = (CartProduct * len(cart_products_list))(*cart_products_list)
+    # cart_products_list = [CartProduct(1,100), CartProduct(3,200)]
+    cart_products_array = (CartProduct * len(liste_cart_products))(*liste_cart_products)
 
     #Act
-    result = get_lib.calcule_total(cart_products_array, len(cart_products_list))
+    result = get_lib.calcule_total(cart_products_array, len(liste_cart_products))
 
-    assert result == 700
+    assert result == expected
+    assert isinstance(result, float)
