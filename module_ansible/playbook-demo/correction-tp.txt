@@ -1,0 +1,9 @@
+liste des modules ansible pour les tasks:
+ - apt ou yum en fonction de la distrib pour installer postgresql, postgresql-client, python3, git
+ - Pour créer la base de données, on peut utiliser les modules command ou shell, sinon on peut
+   aussi utiliser un module de ansible.community postgresql_db pour créer une base de donneé, pour créer un utilisateur postgresql_user
+ - Pour copier les sources du master, on utilise le module copy, ou shell pour clone à partir d'un dépôt git.
+ - Un shell pour installer les requirements de notre api rest.
+ - Un shell pour démarrer notre application
+ - un shell pour executer les tests, à enregister dans une variables pour récupérer le resultat  
+ - pour enregistrer dans le master les resultats (variable de la task d'avant), on utilise le module local_action
