@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+  - name: demo fact
+    debug:
+      var: ansible_facts['os_family']
+  - name: install apache2
+    apt:
+      name: apache2
+    when: ansible_facts['os_family'] == "Debian"
