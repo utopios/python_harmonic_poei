@@ -7,10 +7,11 @@
   ##Bloc vars
   vars:
     text_content: "contenu du text"
-    file_name: "test.txt"
+    file_name: "./test.txt"
 
   tasks:
   - name: write some text in file
-    command:
-      cmd: echo {{ text_content }} >> {{ file_name }}
+    shell:
+      cmd: "echo {{ text_content }} >> {{ file_name }} & cat {{ file_name }}"
+    
 
