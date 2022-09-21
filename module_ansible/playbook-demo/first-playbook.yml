@@ -14,7 +14,8 @@
   - name: install nginx
     apt: 
       name: nginx
-    notify: start nginx
+    notify: 
+    - start nginx
 
   
   # - name: execute command git clone project
