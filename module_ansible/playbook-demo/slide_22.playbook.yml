@@ -1,0 +1,37 @@
+
+---
+
+- hosts: all
+  become: true
+  tasks:
+  - name: copy file with vars
+    template:
+      src: "{{ item['file_name_src'] }}"
+      dest:  "{{ item['file_name_dest'] }}"
+    with_items:
+    - file_name_src: file_1.py.j2
+      file_name_dest: ./file_1.py
+    - file_name_src: file_2.py.j2
+      file_name_dest: ./file_2.py 
+  
+
+  - name: execute python file
+    shell:
+      cmd: python3 {{ item["file_name_dest"] }}
+    ##register permet de stocker le retour d'un module dans une variable
+    register: result_shell
+    with_items:
+    - file_name_src: file_1.py.j2
+      file_name_dest: ./file_1.py
+    - file_name_src: file_2.py.j2
+      file_name_dest: ./file_2.py
+
+  - name: debug python file return
+    debug:
+      var: result_shell.results[{{ item }}].stdout_lines
+    with_items:
+      - 0
+      - 1
+      - 2
+    
+
