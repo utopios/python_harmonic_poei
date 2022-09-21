@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  - name: copy python file
+    copy:
+      src: demo-playbook.py
+      dest: ./demo-playbook.py
+  
+  - name: execute python file
+    command:
+      cmd: python3 demo-playbook.py

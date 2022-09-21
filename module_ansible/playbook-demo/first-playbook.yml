@@ -12,5 +12,7 @@
       update_cache: yes
   
   - name: execute command git clone project
-    command:
-      cmd: git clone https://github.com/utopios/python_harmonic_poei.git
+    # command:
+    #   cmd: git clone https://github.com/utopios/python_harmonic_poei.git
+    shell:
+       cmd: git clone https://github.com/utopios/python_harmonic_poei.git
