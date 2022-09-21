@@ -1,0 +1,38 @@
+---
+
+### Objet (machines, tasks,....)
+- hosts: all ### target inventory of machines, if only dev part
+  #hosts: dev
+  become: true ### ansible task executed with sudo
+
+  tasks:
+  - name: install git ###task for installing git
+    apt:
+      name: git
+      update_cache: yes
+      deb: /path_to_package/package_name.deb
+    
+  
+  - name: install nginx
+    apt: 
+      name: nginx
+    notify: 
+    - start nginx
+    - second handler
+
+  
+  # - name: execute command git clone project
+  #   # command:
+  #   #   cmd: git clone https://github.com/utopios/python_harmonic_poei.git
+  #   shell:
+  #      cmd: git clone https://github.com/utopios/python_harmonic_poei.git
+  
+  handlers:
+  - name: start nginx
+    service:
+      name: nginx
+      state: started 
+  - name: second handler
+    service:
+      name: nginx
+      state: started 
