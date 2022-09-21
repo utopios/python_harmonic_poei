@@ -1,0 +1,14 @@
+---
+- hosts: all 
+  become: true 
+
+  tasks:
+  - name: write multi-files
+    shell:
+      cmd: echo "hello" > {{ item }}
+    with_items:
+      - ./file1.txt
+      - ./file2.txt
+      - ./file3.txt
+      - ./file4.txt
+      - ./file5.txt
