@@ -1,0 +1,12 @@
+---
+
+### Objet (machines, tasks,....)
+- hosts: all ### target inventory of machines, if only dev part
+  #hosts: dev
+  become: true ### ansible task executed with sudo
+
+  tasks:
+  - name: install git ###task for installing git
+    apt:
+      name: git
+      update_cache: yes
