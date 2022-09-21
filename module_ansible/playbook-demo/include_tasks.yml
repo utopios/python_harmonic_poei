@@ -1,7 +1,7 @@
 - name: copy file with vars
-    template:
-      src: "{{ object['file_name_src'] }}"
-      dest:  "{{ object['file_name_dest'] }}"
+  template:
+    src: "{{ object['file_name_src'] }}"
+    dest:  "{{ object['file_name_dest'] }}"
 
 - name: execute python file
   shell:
