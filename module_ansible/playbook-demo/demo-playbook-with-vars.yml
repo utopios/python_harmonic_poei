@@ -1,0 +1,16 @@
+
+---
+
+- hosts: all
+  become: true
+
+  ##Bloc vars
+  vars:
+    text_content: "contenu du text"
+    file_name: "test.txt"
+
+  tasks:
+  - name: write some text in file
+    command:
+      cmd: echo {{ text_content }} >> {{ file_name }}
+
