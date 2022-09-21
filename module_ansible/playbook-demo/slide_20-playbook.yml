@@ -1,0 +1,44 @@
+---
+
+- hosts: all 
+  become: true 
+
+  tasks:
+  - name: install all needed packages for debian familiy
+    apt:
+      name:
+      - postgresql
+      - python3
+      - nginx
+      update_cache: yes
+    when: ansible_facts['os_family'] == "Debian"
+    notify: 
+    - start nginx
+    - start postgresql
+  
+  - name: install all needed packages for redhat familiy
+    yum:
+      name:
+      - postgresql
+      - python3
+      - nginx
+      update_cache: yes
+    when: ansible_facts['os_family'] == "RedHat"
+    notify: 
+    - start nginx
+    - start postgresql
+  
+  
+
+  
+
+  handlers:
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+    
+    - name: start postgresql
+      service:
+        name: postgresql
+        state: started
