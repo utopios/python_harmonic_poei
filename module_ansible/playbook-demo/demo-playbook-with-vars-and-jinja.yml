@@ -1,0 +1,20 @@
+
+---
+
+- hosts: all
+  become: true
+
+  ##Bloc vars
+  # vars:
+  #   text_content: "contenu du text"
+  #   file_name: "./test.txt"
+
+  ##url to vars_file
+  vars_files: vars/main.yml
+  tasks:
+  - name: copy file with vars
+    template:
+      src: demo.py.j2
+      dest: ./demo.py
+    
+

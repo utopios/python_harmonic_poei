@@ -3,7 +3,7 @@
 - hosts: all
   become: true
   tasks:
-  - name: install postgresql and postgresql-server
+  - name: install postgresql and postgresql-client
     apt:
       name:
       - postgresql
