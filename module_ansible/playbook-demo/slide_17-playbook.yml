@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  - name: install postgresql and postgresql-server
+    apt:
+      name:
+      - postgresql
+      - postgresql-client
+    notify: 
+    - start postgresql
+  
+  handlers:
+  - name: start postgresql
+    service:
+      name: postgresql
+      state: started
+  

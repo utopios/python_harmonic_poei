@@ -10,12 +10,14 @@
     apt:
       name: git
       update_cache: yes
+    
   
   - name: install nginx
     apt: 
       name: nginx
     notify: 
     - start nginx
+    - second handler
 
   
   # - name: execute command git clone project
@@ -26,6 +28,10 @@
   
   handlers:
   - name: start nginx
+    service:
+      name: nginx
+      state: started 
+  - name: second handler
     service:
       name: nginx
       state: started 
