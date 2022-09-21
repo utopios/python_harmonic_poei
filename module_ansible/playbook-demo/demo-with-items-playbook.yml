@@ -5,7 +5,7 @@
   tasks:
   - name: write multi-files
     shell:
-      cmd: echo "{{ item["first_name"] }} {{ item["last_name"] }}" > {{ item["file_name"] }}
+      cmd: echo "{{ item["first_name"] }} {{ item["last_name"] }}" > {{ item["file_name"] }} 
     with_items:
       - first_name: ihab
         last_name: abadi
