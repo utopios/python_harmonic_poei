@@ -1,0 +1,26 @@
+---
+# tasks file for roles/db
+- name: install package debian
+    apt:
+      name: 
+        - postgresql
+        - postgresql-client
+    when: ansible_facts['os_family'] == "Debian"
+  
+- name: install package redhat
+  yum:
+    name: 
+      - postgresql
+      - postgresql-client
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: copy custom configuration
+  copy:
+    src: ./files/pg_hba.conf
+    dest: /etc/postgresql/13/main/pg_hba.conf
+  notify: 
+    - restart postgresql
+
+- name: create database
+  postgresql_db:
+    name: "{{ data_base }}"
