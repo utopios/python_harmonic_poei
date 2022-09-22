@@ -60,4 +60,4 @@
   - name: debug pytest result
     debug:
       var:
-      - result_pytest
+      - result_pytest.stdout_lines
