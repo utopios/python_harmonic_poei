@@ -31,11 +31,17 @@
   # - name: clone API from github
   #   shell:
   #     cmd: mkdir api_sources & git clone https://github.com/utopios/python_harmonic_poei.git ./api_sources
+
+  ###update project
+  - name: clone API from github
+    shell:
+      chdir: ./api_sources
+      cmd: git pull origin main
   
   ###install pip packages
-  # - name: install pip package
-  #   shell:
-  #     cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
+  - name: install pip package
+    shell:
+      cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
   
   ##start app
   # - name: start app
