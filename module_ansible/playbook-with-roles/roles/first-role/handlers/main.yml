@@ -1,0 +1,5 @@
+---
+# handlers file for roles/first-role
+- name: start script
+  shell:
+    cmd: python3 first.py

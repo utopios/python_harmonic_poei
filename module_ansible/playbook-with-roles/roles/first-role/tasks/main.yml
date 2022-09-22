@@ -1,0 +1,14 @@
+---
+# tasks file for roles/first-role
+- name: install debian packages
+  apt:
+    name:
+      - python3
+      - python3-pip
+    update_cache: yes
+
+# task create python script
+- name: create python script
+  shell:
+    cmd: echo "print('hello')" > first.py
+  notify: start script
