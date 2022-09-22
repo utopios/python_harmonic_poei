@@ -1,2 +1,4 @@
 ---
 # vars file for roles/app
+folder_app: "api_resources"
+app_repos: "https://github.com/utopios/python_harmonic_poei.git"

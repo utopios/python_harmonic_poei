@@ -1,2 +1,49 @@
 ---
 # tasks file for roles/app
+
+
+- name: install package for debian
+  apt:
+    name: 
+      - python3
+      - python3-pip
+      - python3-psycopg2
+  when: ansible_facts['os_family'] == "Debian"
+
+
+
+###clone project
+- name: clone API from github
+  shell:
+    cmd: mkdir {{ folder_app }} & git clone {{ app_repos }} ./{{ folder_app }}
+
+###update project
+# - name: clone API from github
+#   shell:
+#     chdir: ./api_sources
+#     cmd: git pull origin main
+
+###install pip packages
+- name: install pip package
+  shell:
+    chdir: ./{{ folder_app }}
+    cmd: python3 -m pip install -r /requirements.txt
+
+#start app
+- name: start app
+  shell:
+    chdir: ./{{ folder_app }}
+    cmd: python app.py
+
+##run test
+- name: run test
+  shell:
+    chdir: ./{{ folder_app }}
+    cmd: pytest
+  register: result_pytest
+
+##debug pytest
+- name: debug pytest result
+  debug:
+    var:
+    - result_pytest.stdout_lines
