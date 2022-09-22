@@ -20,3 +20,7 @@ ansible-playbook <name_of_the_playbook>
 
 ##Commande ansible-playbook with extra vars
 ansible-playbook <play_book_name> --extra-vars "name_var=val_var";  
+
+###Commande création d'un role
+
+ansible-galaxy init <path_to_role_folder> "roles/demo-role"

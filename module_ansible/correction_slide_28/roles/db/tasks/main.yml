@@ -1,11 +1,11 @@
 ---
 # tasks file for roles/db
 - name: install package debian
-    apt:
-      name: 
-        - postgresql
-        - postgresql-client
-    when: ansible_facts['os_family'] == "Debian"
+  apt:
+    name: 
+      - postgresql
+      - postgresql-client
+  when: ansible_facts['os_family'] == "Debian"
   
 - name: install package redhat
   yum:
