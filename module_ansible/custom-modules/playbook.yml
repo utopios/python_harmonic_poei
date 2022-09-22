@@ -6,7 +6,7 @@
       first_custom_module:
         name: "value of name argument"
         description: "description value"
-      register: result
+      register: output_module
     - name: debug
       debug:
-        var: result
+        var: output_module
