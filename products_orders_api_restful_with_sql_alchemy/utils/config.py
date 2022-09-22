@@ -1,7 +1,7 @@
 postgresql = {
     'host': 'localhost',
-    'user': 'cours',
-    'password': 'db',
+    'user': 'postgres',
+    'password': '',
     'db': 'harmonic'
 }
 
