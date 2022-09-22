@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: custom module
+      first_custom_module:
+      register: result
+    - name: debug
+      debug:
+        var: result
