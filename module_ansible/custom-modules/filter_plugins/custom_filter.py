@@ -12,5 +12,5 @@ class FilterModule(object):
 
         result = ""
         for p in ports:
-            result += str(p['port']) + " " + p['status'] + " | "
+            result += "port :{port}, status:{state} | ".format(port=p["port"], state=p["status"])
         return result
