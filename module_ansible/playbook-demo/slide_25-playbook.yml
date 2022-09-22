@@ -38,7 +38,20 @@
   #     cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
   
   ##start app
-  - name: start app
+  # - name: start app
+  #   shell:
+  #     chdir: ./api_sources/products_orders_api_restful_with_sql_alchemy
+  #     cmd: gunicorn -b :80 app:app &
+  
+  ##run test
+  - name: run test
     shell:
       chdir: ./api_sources/products_orders_api_restful_with_sql_alchemy
-      cmd: gunicorn -b :80 app:app &
+      cmd: pytest
+    register: result_pytest
+  
+  ##debug pytest
+  - name: debug pytest result
+    debug:
+      var:
+      - result_pytest
