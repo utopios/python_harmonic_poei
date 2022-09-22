@@ -22,7 +22,7 @@
       register: output_module_scanner
     - name: debug
       debug:
-        var: "{{ output_module_scanner.result | port_filter }}"
+        var: output_module_scanner.result | port_filter
 #      with_items:
 ##        - output_module_1
 ##        - output_module_2
