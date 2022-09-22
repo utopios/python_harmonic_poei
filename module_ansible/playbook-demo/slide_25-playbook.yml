@@ -33,6 +33,12 @@
   #     cmd: mkdir api_sources & git clone https://github.com/utopios/python_harmonic_poei.git ./api_sources
   
   ###install pip packages
-  - name: install pip package
+  # - name: install pip package
+  #   shell:
+  #     cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
+  
+  ##start app
+  - name: start app
     shell:
-      cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
+      chdir: ./api_sources/products_orders_api_restful_with_sql_alchemy
+      cmd: gunicorn -b :80 app:app &
