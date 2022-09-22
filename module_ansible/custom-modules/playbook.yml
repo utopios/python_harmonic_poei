@@ -2,16 +2,19 @@
 - hosts: all
   become: true
   tasks:
+
     - name: custom module
       first_custom_module:
         name: "value of name argument"
         description: "description value"
       register: output_module_1
+
     - name: second custom module
       second_module:
         file_name: "file_from_custom.txt"
         file_content: "content of file from custom module"
       register: output_module_2
+
     - name: debug
       debug:
         var: "{{ item }}"
