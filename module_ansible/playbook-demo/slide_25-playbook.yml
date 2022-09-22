@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install package debian
+    apt:
+      name: 
+        - postgresql
+        - postgresql-client
+        - python3
+        - python3-psycopg2
+        - python3-pip
+    when: ansible_facts['os_family'] == "Debian"
+  
+  - name: install package redhat
+    yum:
+      name: 
+        - postgresql
+        - postgresql-client
+        - python3
+        - python3-psycopg2
+        - python3-pip
+    when: ansible_facts['os_family'] == "RedHat"
+  
+  ##task create DB
+  - name: create database
+    postgresql_db:
+      name: "harmonic"
+      
+  ###clone project
+  # - name: clone API from github
+  #   shell:
+  #     cmd: mkdir api_sources & git clone https://github.com/utopios/python_harmonic_poei.git ./api_sources
+  
+  ###install pip packages
+  - name: install pip package
+    shell:
+      cmd: python3 -m pip install -r ./api_sources/products_orders_api_restful_with_sql_alchemy/requirements.txt
